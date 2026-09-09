@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kabir@linux-terminal:~</title>
+  <style>
+    /* Global Reset & Layout */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0d0e15;
+      color: #cdd6f4;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Linux Window Frame */
+    .terminal-window {
+      width: 100%;
+      max-width: 800px;
+      background-color: #1e1e2e;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid #313244;
+      overflow: hidden;
+    }
+
+    /* Window Header Bar */
+    .terminal-header {
+      background-color: #181825;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      border-bottom: 1px solid #313244;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .close { background-color: #f38ba8; }
+    .minimize { background-color: #f9e2af; }
+    .maximize { background-color: #a6e3a1; }
+
+    .window-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.9rem;
+      color: #a6adc8;
+    }
+
+    /* Terminal Body Content */
+    .terminal-body {
+      padding: 20px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Neofetch Styling */
+    .neofetch-container {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .ascii-art {
+      color: #89b4fa; /* Blue accent for OS logo */
+      white-space: pre;
+      font-weight: bold;
+    }
+
+    .system-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-host {
+      color: #f38ba8;
+      font-weight: bold;
+    }
+    .separator {
+      color: #a6adc8;
+      margin-bottom: 5px;
+    }
+
+    .info-line {
+      margin-bottom: 2px;
+    }
+
+    .info-label {
+      color: #89b4fa;
+      font-weight: bold;
+    }
+
+    /* Active Prompt & Typing Loop */
+    .prompt-line {
+      display: flex;
+      align-items: flex-start;
+      color: #a6e3a1;
+      font-weight: bold;
+    }
+
+    .prompt-path {
+      color: #89b4fa;
+    }
+
+    .prompt-sign {
+      color: #cdd6f4;
+      margin-right: 10px;
+    }
+
+    .typing-text {
+      color: #cdd6f4;
+      font-weight: normal;
+      word-break: break-word;
+    }
+
+    /* Blinking Block Cursor */
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background-color: #cdd6f4;
+      margin-left: 4px;
+      animation: blink 0.8s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="terminal-window">
+    <!-- Window Bar -->
+    <div class="terminal-header">
+      <div class="buttons">
+        <div class="button close"></div>
+        <div class="button minimize"></div>
+        <div class="button maximize"></div>
+      </div>
+      <div class="window-title">Kabir@linux-terminal: ~</div>
+    </div>
+
+    <!-- Terminal screen -->
+    <div class="terminal-body">
+      
+      <!-- Static Neofetch Section -->
+      <div class="neofetch-container">
+        <!-- Linux Custom ASCII Art -->
+        <div class="ascii-art">
+       .-.   .-.
+      /   \ /   \ 
+  .-. |    |    | .-.
+ /   \ \  / \  / /   \
+ |   |  '`.-.`'  |   |
+  \_.' .-`   `-. '._/
+    .-'         '-.
+   /               \
+   |               |
+    \             /
+     '.___...___.'
+</div>
+        
+        <!-- System Specifications -->
+        <div class="system-info">
+          <div class="user-host">Kabir@warrior-OS</div>
+          <div class="separator">-------------------</div>
+          <div class="info-line"><span class="info-label">OS</span>: Linux x86_64</div>
+          <div class="info-line"><span class="info-label">Kernel</span>: 6.1.0-war-zone</div>
+          <div class="info-line"><span class="info-label">Uptime</span>: Indefinite</div>
+          <div class="info-line"><span class="info-label">Shell</span>: bash 5.2.15</div>
+          <div class="info-line"><span class="info-label">Status</span>: Operational (Critical Battle Ongoing)</div>
+          <div class="info-line"><span class="info-label">Memory</span>: Maximum capacity utilized</div>
+        </div>
+      </div>
+
+      <!-- Actionable Command Prompt -->
+      <div class="prompt-line">
+        <span>Kabir@warrior-OS:<span class="prompt-path">~</span><span class="prompt-sign">$</span></span>
+        <span class="typing-text" id="terminal-output"></span><span class="cursor"></span>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Phrasing sequence representing your situation precisely
+    const words = [
+      "echo 'I am currently fighting with my life...'",
+      "echo 'As soon as this war is over...'",
+      "echo 'I will be back soon.'",
+      "echo 'System status: Standing ground. Just wait for my return.'"
+    ];
+    
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const outputElement = document.getElementById("terminal-output");
+    
+    function typeEffect() {
+      const currentWord = words[wordIndex];
+      
+      if (isDeleting) {
+        outputElement.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        outputElement.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let typeSpeed = isDeleting ? 30 : 80;
+
+      if (!isDeleting && charIndex === currentWord.length) {
+        typeSpeed = 3000; // Freeze text for 3 seconds at the end of each statement
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        typeSpeed = 500; // Small delay before typing the next command line
+      }
+
+      setTimeout(typeEffect, typeSpeed);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(typeEffect, 800);
+    });
+  </script>
+</body>
+</html>
