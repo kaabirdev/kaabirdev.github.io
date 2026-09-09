@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>বইবিনিময় | পুরোনো বইয়ের নতুন ঠিকানা</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Serif+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb', // Primary Blue
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                            950: '#172554',
+                        },
+                        glass: {
+                            light: 'rgba(255, 255, 255, 0.7)',
+                            medium: 'rgba(255, 255, 255, 0.4)',
+                            dark: 'rgba(255, 255, 255, 0.1)',
+                        },
+                        text: {
+                            main: '#0f172a', // Slate 900
+                            muted: '#475569', // Slate 600
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif Bengali"', 'serif'],
+                        sans: ['"Hind Siliguri"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            overscroll-behavior-y: none;
+            background-color: #f8fafc; /* Fallback */
+        }
+
+        /* Abstract Mesh Background to make Glassmorphism pop */
+        .mesh-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            background-color: #f4f7fa;
+            overflow: hidden;
+        }
+        .mesh-blob-1 {
+            position: absolute; top: -10%; left: -10%; width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(191,219,254,0.6) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%; filter: blur(60px); animation: float 20s infinite ease-in-out alternate;
+        }
+        .mesh-blob-2 {
+            position: absolute; top: 40%; right: -10%; width: 40vw; height: 40vw;
+            background: radial-gradient(circle, rgba(167,243,208,0.4) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%; filter: blur(60px); animation: float 15s infinite ease-in-out alternate-reverse;
+        }
+        .mesh-blob-3 {
+            position: absolute; bottom: -10%; left: 20%; width: 60vw; height: 40vw;
+            background: radial-gradient(circle, rgba(147,197,253,0.5) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%; filter: blur(60px); animation: float 25s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 5%) scale(1.05); }
+            100% { transform: translate(-5%, -5%) scale(0.95); }
+        }
+
+        /* Core Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(37, 99, 235, 0.05);
+        }
+        
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.5) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15);
+            border-color: rgba(255, 255, 255, 1);
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            outline: none;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @media (max-width: 768px) {
+            body { padding-bottom: 80px; }
+            .mesh-blob-1 { width: 100vw; height: 100vw; }
+            .mesh-blob-2 { width: 80vw; height: 80vw; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-text-main relative">
+
+    <div class="mesh-bg">
+        <div class="mesh-blob-1"></div>
+        <div class="mesh-blob-2"></div>
+        <div class="mesh-blob-3"></div>
+    </div>
+
+    <div class="md:hidden sticky top-0 z-40 glass-panel px-4 py-3 border-b border-white/60">
+        <div class="flex justify-between items-center mb-3">
+            <div class="flex items-center gap-1.5 cursor-pointer">
+                <i class="ph-fill ph-books text-2xl text-brand-600"></i>
+                <div class="font-serif font-bold text-2xl text-brand-900">বইবিনিময়</div>
+            </div>
+            <div class="flex gap-3 text-brand-700">
+                <div class="w-9 h-9 rounded-full bg-white/60 flex items-center justify-center border border-white/80 shadow-sm">
+                    <i class="ph ph-bell text-xl"></i>
+                </div>
+                <div class="w-9 h-9 rounded-full bg-white/60 flex items-center justify-center border border-white/80 shadow-sm">
+                    <i class="ph ph-user-circle text-xl"></i>
+                </div>
+            </div>
+        </div>
+        <div class="relative">
+            <i class="ph ph-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-brand-500 text-lg"></i>
+            <input type="text" placeholder="বই, লেখক বা ISBN দিয়ে খুঁজুন..." class="w-full glass-input rounded-full py-2.5 pl-11 pr-4 text-sm font-sans text-text-main shadow-inner">
+        </div>
+    </div>
+
+    <header class="hidden md:block sticky top-0 z-50 transition-all duration-300 mt-4 px-6">
+        <div class="max-w-7xl mx-auto glass-panel rounded-full h-20 flex items-center justify-between px-8">
+            <!-- Brand -->
+            <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                <i class="ph-fill ph-books text-3xl text-brand-600"></i>
+                <span class="font-serif font-bold text-3xl text-brand-900 tracking-tight">বইবিনিময়</span>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-2xl mx-12">
+                <div class="relative group">
+                    <i class="ph ph-magnifying-glass absolute left-5 top-1/2 transform -translate-y-1/2 text-brand-400 text-xl group-focus-within:text-brand-600 transition-colors"></i>
+                    <input type="text" placeholder="বই, লেখক বা ISBN দিয়ে খুঁজুন..." class="w-full glass-input rounded-full py-3.5 pl-14 pr-6 text-base font-sans text-text-main shadow-inner shadow-brand-900/5">
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex items-center gap-8">
+                <a href="#" class="font-medium text-text-muted hover:text-brand-600 transition-colors">বই খুঁজুন</a>
+                <a href="#" class="font-medium text-text-muted hover:text-brand-600 transition-colors">বার্তা</a>
+                <a href="#" class="font-medium text-brand-600 hover:text-brand-800 transition-colors">প্রবেশ করুন</a>
+                <button class="bg-gradient-to-r from-brand-600 to-brand-500 text-white px-7 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-brand-500/40 hover:-translate-y-0.5 transition-all flex items-center gap-2 border border-brand-400/50">
+                    <i class="ph ph-plus-circle text-lg"></i>
+                    বই বিক্রি করুন
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <nav class="md:hidden fixed bottom-0 left-0 w-full glass-panel border-t border-white/60 flex justify-around items-center h-[75px] z-50 pb-2">
+        <a href="#" class="flex flex-col items-center text-brand-600 gap-1 mt-2">
+            <i class="ph-fill ph-house text-2xl drop-shadow-sm"></i>
+            <span class="text-[10px] font-bold">হোম</span>
+        </a>
+        <a href="#" class="flex flex-col items-center text-text-muted hover:text-brand-600 gap-1 mt-2 transition-colors">
+            <i class="ph ph-magnifying-glass text-2xl"></i>
+            <span class="text-[10px] font-medium">খুঁজুন</span>
+        </a>
+        <div class="relative -top-6">
+            <button class="bg-gradient-to-br from-brand-500 to-brand-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-brand-500/40 border-[3px] border-white/80 backdrop-blur-md">
+                <i class="ph ph-plus text-2xl"></i>
+            </button>
+            <span class="absolute -bottom-5 left-1/2 transform -translate-x-1/2 text-[10px] font-bold text-brand-800 w-max">বই বিক্রি</span>
+        </div>
+        <a href="#" class="flex flex-col items-center text-text-muted hover:text-brand-600 gap-1 mt-2 transition-colors relative">
+            <i class="ph ph-chat-circle text-2xl"></i>
+            <span class="absolute top-0 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+            <span class="text-[10px] font-medium">বার্তা</span>
+        </a>
+        <a href="#" class="flex flex-col items-center text-text-muted hover:text-brand-600 gap-1 mt-2 transition-colors">
+            <i class="ph ph-user text-2xl"></i>
+            <span class="text-[10px] font-medium">প্রোফাইল</span>
+        </a>
+    </nav>
+
+    <main>
+        <section class="relative pt-10 pb-16 md:pt-28 md:pb-24 px-4 md:px-6">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Content -->
+                <div class="md:col-span-6 z-10">
+                    <div class="inline-flex items-center gap-2 glass-panel px-4 py-2 rounded-full text-sm font-semibold text-brand-700 mb-6 border-white">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                        </span>
+                        বইয়ের নতুন ঠিকানা
+                    </div>
+                    <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.15] mb-6 text-brand-950">
+                        পুরোনো বইয়ের গল্প <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-400">এবার নতুন পাঠকের কাছে।</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-text-muted mb-10 max-w-lg leading-relaxed font-medium">
+                        আপনার পড়া শেষ? বইটির গল্প কিন্তু শেষ হয়নি। আপনার বই খুঁজে নিক নতুন একজন পাঠক, সম্পূর্ণ নতুন একটি ঠিকানায়।
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 hidden md:flex">
+                        <button class="bg-gradient-to-r from-brand-600 to-brand-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-xl hover:shadow-brand-500/30 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 border border-brand-400/30">
+                            <i class="ph ph-books text-xl"></i>
+                            বই খুঁজুন
+                        </button>
+                        <button class="glass-panel text-brand-800 px-8 py-4 rounded-full font-bold text-lg hover:bg-white/90 hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
+                            <i class="ph ph-tag text-xl text-brand-600"></i>
+                            বই বিক্রি করুন
+                        </button>
+                    </div>
+                </div>
+
+                <div class="md:col-span-6 relative h-[400px] md:h-[550px] hidden md:block perspective-1000">
+                    <!-- Glass Showcase Background -->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] glass-panel rounded-full blur-[2px] border border-white/50 bg-white/20"></div>
+                    
+                    <!-- Book 1 (Back/Left) -->
+                    <div class="absolute top-16 left-4 w-48 h-72 rounded-xl shadow-2xl overflow-hidden transform -rotate-12 scale-90 transition-transform duration-500 hover:rotate-0 hover:scale-100 hover:z-30 border border-white/40">
+                        <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop" alt="Book cover" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-brand-900/40 to-transparent"></div>
+                    </div>
+                    
+                    <!-- Book 2 (Front/Center) -->
+                    <div class="absolute top-24 left-32 w-56 h-80 rounded-2xl shadow-[0_30px_60px_-15px_rgba(37,99,235,0.3)] overflow-hidden z-20 transition-transform duration-500 hover:-translate-y-6 border-2 border-white/60">
+                        <img src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1653275222i/50991951.jpg" alt="Book cover" class="w-full h-full object-cover">
+                        
+                        <!-- Floating Glass Badge -->
+                        <div class="absolute bottom-4 left-4 glass-panel px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-white/80 shadow-lg">
+                            <div class="w-5 h-5 rounded-full bg-brand-100 flex items-center justify-center">
+                                <i class="ph-fill ph-star text-brand-600 text-xs"></i>
+                            </div>
+                            <span class="text-xs font-bold text-brand-900">৪.৯ রেটিং</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Book 3 (Back/Right) -->
+                    <div class="absolute top-10 right-4 w-44 h-64 rounded-xl shadow-2xl overflow-hidden transform rotate-12 scale-90 transition-transform duration-500 hover:rotate-0 hover:scale-100 hover:z-30 border border-white/40">
+                        <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop" alt="Book cover" class="w-full h-full object-cover">
+                    </div>
+
+                    <!-- Floating UI Element -->
+                    <div class="absolute top-24 right-0 glass-card px-4 py-3 rounded-2xl flex items-center gap-3 z-30 animate-[float_6s_ease-in-out_infinite]">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center border border-white">
+                            <i class="ph-fill ph-seal-check text-green-500 text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-text-muted font-medium">বিক্রেতা অবস্থা</div>
+                            <div class="text-sm font-bold text-brand-900">যাচাইকৃত ব্যবসা</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="py-4 md:py-8 z-10 relative">
+            <div class="max-w-7xl mx-auto px-4 md:px-6">
+                <div class="flex md:grid md:grid-cols-4 gap-4 md:gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory">
+                    
+                    <div class="glass-card flex items-center gap-4 min-w-[240px] md:min-w-0 snap-start p-4 rounded-2xl">
+                        <div class="w-12 h-12 rounded-full bg-brand-50 border border-brand-100 flex items-center justify-center shadow-inner shrink-0">
+                            <i class="ph-fill ph-shield-check text-brand-500 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-brand-900 text-sm">নিরাপদ লেনদেন</h4>
+                            <p class="text-xs text-text-muted font-medium mt-0.5">যাচাইকৃত ব্যবহারকারী</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card flex items-center gap-4 min-w-[240px] md:min-w-0 snap-start p-4 rounded-2xl">
+                        <div class="w-12 h-12 rounded-full bg-brand-50 border border-brand-100 flex items-center justify-center shadow-inner shrink-0">
+                            <i class="ph-fill ph-seal-check text-brand-500 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-brand-900 text-sm">যাচাইকৃত ব্যবসা</h4>
+                            <p class="text-xs text-text-muted font-medium mt-0.5">নির্ভরযোগ্য বিক্রেতা</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card flex items-center gap-4 min-w-[240px] md:min-w-0 snap-start p-4 rounded-2xl">
+                        <div class="w-12 h-12 rounded-full bg-brand-50 border border-brand-100 flex items-center justify-center shadow-inner shrink-0">
+                            <i class="ph-fill ph-chats-circle text-brand-500 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-brand-900 text-sm">সরাসরি যোগাযোগ</h4>
+                            <p class="text-xs text-text-muted font-medium mt-0.5">ক্রেতা ও বিক্রেতার মাঝে</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card flex items-center gap-4 min-w-[240px] md:min-w-0 snap-start p-4 rounded-2xl">
+                        <div class="w-12 h-12 rounded-full bg-brand-50 border border-brand-100 flex items-center justify-center shadow-inner shrink-0">
+                            <i class="ph-fill ph-currency-circle-dollar text-brand-500 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-brand-900 text-sm">স্বচ্ছ মূল্য</h4>
+                            <p class="text-xs text-text-muted font-medium mt-0.5">কোনো লুকানো চার্জ নেই</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-20 px-4 md:px-6 max-w-7xl mx-auto relative z-10">
+            <div class="mb-8 md:mb-12 text-center md:text-left flex flex-col md:flex-row justify-between md:items-end gap-4">
+                <div>
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-950 mb-2">কোন বই খুঁজছেন?</h2>
+                    <p class="text-text-muted text-sm md:text-base font-medium">আপনার পছন্দের বইয়ের জগতে ঢুকে পড়ুন।</p>
+                </div>
+                <button class="hidden md:flex glass-panel px-6 py-2.5 rounded-full text-brand-700 font-bold hover:bg-white hover:shadow-md transition-all items-center gap-2 border border-white">
+                    সব বিভাগ দেখুন <i class="ph-bold ph-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Desktop Grid -->
+            <div class="hidden md:grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
+                <a href="#" class="glass-card h-32 rounded-2xl flex flex-col items-center justify-center p-4 group hover:bg-white/80 transition-all border border-white/60">
+                    <div class="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <i class="ph-duotone ph-book-open-text text-2xl text-brand-600"></i>
+                    </div>
+                    <span class="font-bold text-brand-900">উপন্যাস</span>
+                </a>
+                <a href="#" class="glass-card h-32 rounded-2xl flex flex-col items-center justify-center p-4 group hover:bg-white/80 transition-all border border-white/60">
+                    <div class="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <i class="ph-duotone ph-feather text-2xl text-brand-600"></i>
+                    </div>
+                    <span class="font-bold text-brand-900">গল্প ও কবিতা</span>
+                </a>
+                <a href="#" class="glass-card h-32 rounded-2xl flex flex-col items-center justify-center p-4 group hover:bg-white/80 transition-all border border-white/60">
+                    <div class="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <i class="ph-duotone ph-graduation-cap text-2xl text-brand-600"></i>
+                    </div>
+                    <span class="font-bold text-brand-900">একাডেমিক</span>
+                </a>
+                <a href="#" class="glass-card h-32 rounded-2xl flex flex-col items-center justify-center p-4 group hover:bg-white/80 transition-all border border-white/60">
+                    <div class="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <i class="ph-duotone ph-briefcase text-2xl text-brand-600"></i>
+                    </div>
+                    <span class="font-bold text-brand-900">চাকরির প্রস্তুতি</span>
+                </a>
+                <a href="#" class="glass-card h-32 rounded-2xl flex flex-col items-center justify-center p-4 group hover:bg-white/80 transition-all border border-white/60">
+                    <div class="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <i class="ph-duotone ph-atom text-2xl text-brand-600"></i>
+                    </div>
+                    <span class="font-bold text-brand-900">বিজ্ঞান ও প্রযুক্তি</span>
+                </a>
+                <a href="#" class="glass-card h-32 rounded-2xl flex flex-col items-center justify-center p-4 group hover:bg-white/80 transition-all border border-white/60">
+                    <div class="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <i class="ph-duotone ph-globe-hemisphere-east text-2xl text-brand-600"></i>
+                    </div>
+                    <span class="font-bold text-brand-900">ইতিহাস</span>
+                </a>
+            </div>
+
+            <!-- Mobile Horizontal Scroll -->
+            <div class="md:hidden flex overflow-x-auto hide-scrollbar gap-3 pb-4 snap-x">
+                <a href="#" class="snap-start shrink-0 px-6 py-3 rounded-full bg-brand-600 text-white shadow-lg shadow-brand-500/30 text-sm font-bold border border-brand-500">উপন্যাস</a>
+                <a href="#" class="snap-start shrink-0 px-6 py-3 rounded-full glass-panel text-brand-900 text-sm font-bold border border-white">গল্প ও কবিতা</a>
+                <a href="#" class="snap-start shrink-0 px-6 py-3 rounded-full glass-panel text-brand-900 text-sm font-bold border border-white">একাডেমিক</a>
+                <a href="#" class="snap-start shrink-0 px-6 py-3 rounded-full glass-panel text-brand-900 text-sm font-bold border border-white">চাকরির প্রস্তুতি</a>
+                <a href="#" class="snap-start shrink-0 px-6 py-3 rounded-full glass-panel text-brand-900 text-sm font-bold border border-white">বিজ্ঞান</a>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-20 px-4 md:px-6 relative z-10">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-end mb-8 md:mb-12">
+                    <div>
+                        <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-950 mb-2">আজকের বাছাই</h2>
+                        <p class="text-text-muted text-sm md:text-base font-medium">পাঠকদের জন্য নির্বাচিত কিছু বিশেষ বই।</p>
+                    </div>
+                    <a href="#" class="hidden md:flex items-center gap-2 text-brand-600 hover:text-brand-800 font-bold transition-colors bg-white/50 px-4 py-2 rounded-full border border-white/60">
+                        সব দেখুন <i class="ph-bold ph-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="flex md:grid md:grid-cols-12 gap-5 md:gap-8 overflow-x-auto md:overflow-visible hide-scrollbar snap-x pb-8 md:pb-0">
+                    
+                    <!-- Large Featured Card -->
+                    <div class="snap-start shrink-0 w-[300px] md:w-auto md:col-span-6 group cursor-pointer glass-card p-4 rounded-3xl">
+                        <div class="relative h-[320px] md:h-[400px] rounded-2xl overflow-hidden mb-5 bg-white shadow-inner">
+                            <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=1200&auto=format&fit=crop" alt="Book Cover" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            
+                            <!-- Action Buttons overlay -->
+                            <button class="absolute top-4 right-4 w-10 h-10 glass-panel rounded-full flex items-center justify-center text-brand-900 hover:text-red-500 hover:bg-white transition-all shadow-sm z-10">
+                                <i class="ph-bold ph-heart text-xl"></i>
+                            </button>
+                            
+                            <!-- Badges -->
+                            <div class="absolute top-4 left-4 bg-brand-600/90 backdrop-blur text-white px-3 py-1.5 rounded-full text-xs font-bold z-10 shadow-lg border border-brand-500/50">
+                                নতুনের মতো
+                            </div>
+                        </div>
+                        <div class="px-2 pb-2">
+                            <div class="flex justify-between items-start mb-1">
+                                <h3 class="font-serif font-bold text-2xl text-brand-950 leading-tight">পথের পাঁচালী</h3>
+                                <span class="font-bold text-2xl text-brand-600 bg-brand-50 px-3 py-1 rounded-lg border border-brand-100">৳১৫০</span>
+                            </div>
+                            <p class="text-text-muted font-medium text-sm mb-4">বিভূতিভূষণ বন্দ্যোপাধ্যায়</p>
+                            
+                            <div class="flex items-center justify-between border-t border-brand-200/50 pt-4">
+                                <div class="flex items-center gap-1.5 text-xs font-bold text-brand-800 bg-white/60 px-3 py-1.5 rounded-full border border-white">
+                                    <i class="ph-fill ph-seal-check text-brand-500 text-sm"></i> যাচাইকৃত বিক্রেতা
+                                </div>
+                                <span class="flex items-center gap-1 text-xs font-medium text-text-muted bg-white/40 px-3 py-1.5 rounded-full">
+                                    <i class="ph-bold ph-map-pin"></i> মিরপুর, ঢাকা
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Small Cards Grid -->
+                    <div class="md:col-span-6 grid grid-cols-1 md:grid-cols-2 gap-5 flex-shrink-0 flex md:grid flex-row md:flex-col">
+                        
+                        <!-- Small Card 1 -->
+                        <div class="snap-start shrink-0 w-[220px] md:w-auto glass-card p-3 rounded-3xl group cursor-pointer flex flex-col">
+                            <div class="relative h-[200px] rounded-2xl overflow-hidden mb-4 bg-white shadow-inner">
+                                <img src="https://images.unsplash.com/photo-1629196914375-f7e48f477b6d?q=80&w=800&auto=format&fit=crop" alt="Book Cover" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <button class="absolute top-3 right-3 w-8 h-8 glass-panel rounded-full flex items-center justify-center text-brand-900 hover:text-red-500 hover:bg-white transition-all z-10">
+                                    <i class="ph-bold ph-heart"></i>
+                                </button>
+                            </div>
+                            <div class="px-2 pb-1 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="font-serif font-bold text-lg text-brand-950 truncate">গীতাঞ্জলি</h3>
+                                    <p class="text-text-muted text-xs font-medium truncate mb-2">রবীন্দ্রনাথ ঠাকুর</p>
+                                </div>
+                                <div class="flex justify-between items-center border-t border-brand-200/50 pt-2">
+                                    <span class="font-bold text-lg text-brand-600">৳১০০</span>
+                                    <span class="text-[10px] font-bold text-brand-800 bg-white/60 px-2 py-1 rounded border border-white flex items-center gap-1">
+                                        <i class="ph-bold ph-user text-brand-500"></i> সাধারণ বিক্রেতা
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Small Card 2 -->
+                        <div class="snap-start shrink-0 w-[220px] md:w-auto glass-card p-3 rounded-3xl group cursor-pointer flex flex-col">
+                            <div class="relative h-[200px] rounded-2xl overflow-hidden mb-4 bg-white shadow-inner">
+                                <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop" alt="Book Cover" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <button class="absolute top-3 right-3 w-8 h-8 glass-panel rounded-full flex items-center justify-center text-brand-900 hover:text-red-500 hover:bg-white transition-all z-10">
+                                    <i class="ph-bold ph-heart"></i>
+                                </button>
+                                <div class="absolute bottom-3 left-3 bg-brand-100 text-brand-800 px-2 py-1 rounded-lg text-[10px] font-bold border border-brand-200 shadow-sm flex items-center gap-1 z-10">
+                                    <i class="ph-bold ph-truck"></i> ফ্রি ডেলিভারি
+                                </div>
+                            </div>
+                            <div class="px-2 pb-1 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="font-serif font-bold text-lg text-brand-950 truncate">অসমাপ্ত আত্মজীবনী</h3>
+                                    <p class="text-text-muted text-xs font-medium truncate mb-2">শেখ মুজিবুর রহমান</p>
+                                </div>
+                                <div class="flex justify-between items-center border-t border-brand-200/50 pt-2">
+                                    <span class="font-bold text-lg text-brand-600">৳২০০</span>
+                                    <span class="text-[10px] font-bold text-brand-800 bg-white/60 px-2 py-1 rounded border border-white flex items-center gap-1">
+                                        <i class="ph-fill ph-seal-check text-brand-500"></i> যাচাইকৃত
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                         <!-- Small Card 3 & 4 (Hidden on mobile) -->
+                         <div class="hidden md:flex glass-card p-3 rounded-3xl group cursor-pointer flex-col">
+                            <div class="relative h-[200px] rounded-2xl overflow-hidden mb-4 bg-white shadow-inner">
+                                <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            </div>
+                            <div class="px-2 pb-1 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="font-serif font-bold text-lg text-brand-950 truncate">সংশপ্তক</h3>
+                                    <p class="text-text-muted text-xs font-medium truncate mb-2">শহীদুল্লা কায়সার</p>
+                                </div>
+                                <div class="flex justify-between items-center border-t border-brand-200/50 pt-2">
+                                    <span class="font-bold text-lg text-brand-600">৳১২০</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden md:flex glass-card p-3 rounded-3xl group cursor-pointer flex-col">
+                            <div class="relative h-[200px] rounded-2xl overflow-hidden mb-4 bg-white shadow-inner">
+                                <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            </div>
+                            <div class="px-2 pb-1 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="font-serif font-bold text-lg text-brand-950 truncate">দেয়াল</h3>
+                                    <p class="text-text-muted text-xs font-medium truncate mb-2">হুমায়ূন আহমেদ</p>
+                                </div>
+                                <div class="flex justify-between items-center border-t border-brand-200/50 pt-2">
+                                    <span class="font-bold text-lg text-brand-600">৳১৮0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-24 px-4 md:px-6 relative z-10 overflow-hidden">
+            <!-- Background accent for this section -->
+            <div class="absolute inset-0 bg-gradient-to-r from-teal-50/50 to-blue-50/50 z-[-1] rounded-3xl mx-2 md:mx-6 border border-white/60 shadow-sm backdrop-blur-md"></div>
+            
+            <div class="max-w-7xl mx-auto px-2 md:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12">
+                    <div class="max-w-2xl">
+                        <span class="inline-block bg-teal-100 text-teal-700 font-bold px-3 py-1.5 rounded-full text-xs mb-4 border border-teal-200 shadow-sm flex items-center gap-1.5 w-max">
+                            <i class="ph-fill ph-gift text-teal-600"></i> বিশেষ উদ্যোগ
+                        </span>
+                        <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-950 mb-2">বিনামূল্যে বই</h2>
+                        <p class="text-text-muted text-sm md:text-base font-medium">দাম নেই। শুধু বইটির জন্য একজন নতুন পাঠক দরকার। ডেলিভারি চার্জ প্রযোজ্য হতে পারে।</p>
+                    </div>
+                    <button class="mt-4 md:mt-0 glass-panel text-brand-800 px-6 py-3 rounded-full font-bold hover:bg-white transition-all text-sm flex items-center gap-2 border-white shadow-sm">
+                        সব বিনামূল্যের বই দেখুন <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="flex md:grid md:grid-cols-4 gap-5 overflow-x-auto hide-scrollbar snap-x pb-4">
+                    
+                    <div class="snap-start shrink-0 w-[260px] md:w-auto glass-card p-4 rounded-3xl group">
+                        <div class="relative h-[220px] rounded-2xl overflow-hidden mb-4 bg-white">
+                            <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute top-3 left-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold z-10 shadow-lg border border-teal-400">
+                                সম্পূর্ণ বিনামূল্যে
+                            </div>
+                        </div>
+                        <div class="px-1">
+                            <h3 class="font-serif font-bold text-lg text-brand-950 line-clamp-1">এইচএসসি পদার্থবিজ্ঞান</h3>
+                            <p class="text-text-muted text-xs font-medium mt-1">শাহজাহান তপন</p>
+                            <div class="mt-4 pt-3 border-t border-brand-200/50 flex flex-col gap-2">
+                                <span class="text-[11px] font-bold text-teal-700 bg-teal-50 px-2 py-1.5 rounded-lg flex items-center gap-1.5">
+                                    <i class="ph-fill ph-info text-teal-500"></i> বই ফ্রি • ডেলিভারি প্রযোজ্য
+                                </span>
+                                <span class="text-[11px] font-bold text-text-muted flex items-center gap-1.5 px-1">
+                                    <i class="ph-bold ph-map-pin text-brand-400"></i> সিলেট সদর
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="snap-start shrink-0 w-[260px] md:w-auto glass-card p-4 rounded-3xl group">
+                        <div class="relative h-[220px] rounded-2xl overflow-hidden mb-4 bg-white">
+                            <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute top-3 left-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold z-10 shadow-lg border border-teal-400">
+                                সম্পূর্ণ বিনামূল্যে
+                            </div>
+                        </div>
+                        <div class="px-1">
+                            <h3 class="font-serif font-bold text-lg text-brand-950 line-clamp-1">এইচএসসি পদার্থবিজ্ঞান</h3>
+                            <p class="text-text-muted text-xs font-medium mt-1">শাহজাহান তপন</p>
+                            <div class="mt-4 pt-3 border-t border-brand-200/50 flex flex-col gap-2">
+                                <span class="text-[11px] font-bold text-teal-700 bg-teal-50 px-2 py-1.5 rounded-lg flex items-center gap-1.5">
+                                    <i class="ph-fill ph-info text-teal-500"></i> বই ফ্রি • ডেলিভারি প্রযোজ্য
+                                </span>
+                                <span class="text-[11px] font-bold text-text-muted flex items-center gap-1.5 px-1">
+                                    <i class="ph-bold ph-map-pin text-brand-400"></i> সিলেট সদর
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="snap-start shrink-0 w-[260px] md:w-auto glass-card p-4 rounded-3xl group">
+                        <div class="relative h-[220px] rounded-2xl overflow-hidden mb-4 bg-white">
+                            <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute top-3 left-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold z-10 shadow-lg border border-teal-400">
+                                বিনামূল্যে
+                            </div>
+                        </div>
+                        <div class="px-1">
+                            <h3 class="font-serif font-bold text-lg text-brand-950 line-clamp-1">ইংরেজি ব্যাকরণ</h3>
+                            <p class="text-text-muted text-xs font-medium mt-1">পুরোনো সংস্করণ</p>
+                            <div class="mt-4 pt-3 border-t border-brand-200/50 flex flex-col gap-2">
+                                <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1.5 rounded-lg flex items-center gap-1.5 border border-emerald-100">
+                                    <i class="ph-fill ph-check-circle text-emerald-500"></i> বই + ডেলিভারি — ফ্রি
+                                </span>
+                                <span class="text-[11px] font-bold text-text-muted flex items-center gap-1.5 px-1">
+                                    <i class="ph-bold ph-map-pin text-brand-400"></i> উত্তরা, ঢাকা
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="snap-start shrink-0 w-[260px] md:w-auto glass-card p-4 rounded-3xl group">
+                        <div class="relative h-[220px] rounded-2xl overflow-hidden mb-4 bg-white">
+                            <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute top-3 left-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold z-10 shadow-lg border border-teal-400">
+                                বিনামূল্যে
+                            </div>
+                        </div>
+                        <div class="px-1">
+                            <h3 class="font-serif font-bold text-lg text-brand-950 line-clamp-1">ইংরেজি ব্যাকরণ</h3>
+                            <p class="text-text-muted text-xs font-medium mt-1">পুরোনো সংস্করণ</p>
+                            <div class="mt-4 pt-3 border-t border-brand-200/50 flex flex-col gap-2">
+                                <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1.5 rounded-lg flex items-center gap-1.5 border border-emerald-100">
+                                    <i class="ph-fill ph-check-circle text-emerald-500"></i> বই + ডেলিভারি — ফ্রি
+                                </span>
+                                <span class="text-[11px] font-bold text-text-muted flex items-center gap-1.5 px-1">
+                                    <i class="ph-bold ph-map-pin text-brand-400"></i> উত্তরা, ঢাকা
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 md:py-24 px-4 md:px-6 relative z-10">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-950 mb-16">এত সহজে বই কেনাবেচা হয়</h2>
+                
+                <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 md:gap-8 relative">
+                    <!-- Glowing Blue Connector line desktop -->
+                    <div class="hidden md:block absolute top-12 left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-brand-200 via-brand-400 to-brand-200 z-0 opacity-50"></div>
+                    
+                    <div class="relative z-10 flex flex-col items-center max-w-[220px]">
+                        <div class="w-24 h-24 glass-card rounded-3xl flex items-center justify-center mb-6 shadow-lg border-2 border-white relative group hover:border-brand-300 transition-colors">
+                            <div class="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-brand-600 text-white font-bold text-sm flex items-center justify-center shadow-md">১</div>
+                            <i class="ph-duotone ph-magnifying-glass text-4xl text-brand-600 group-hover:scale-110 transition-transform"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-900 text-lg mb-2">বই খুঁজুন</h3>
+                        <p class="text-sm text-text-muted font-medium">পছন্দের বইটি সার্চ করুন বা বিভাগ থেকে বেছে নিন।</p>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center max-w-[220px]">
+                        <div class="w-24 h-24 glass-card rounded-3xl flex items-center justify-center mb-6 shadow-lg border-2 border-white relative group hover:border-brand-300 transition-colors">
+                            <div class="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-brand-600 text-white font-bold text-sm flex items-center justify-center shadow-md">২</div>
+                            <i class="ph-duotone ph-chat-teardrop-dots text-4xl text-brand-600 group-hover:scale-110 transition-transform"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-900 text-lg mb-2">কথা বলুন</h3>
+                        <p class="text-sm text-text-muted font-medium">বিক্রেতার সঙ্গে সরাসরি চ্যাট করে বইয়ের অবস্থা জানুন।</p>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center max-w-[220px]">
+                        <div class="w-24 h-24 glass-card rounded-3xl flex items-center justify-center mb-6 shadow-lg border-2 border-white relative group hover:border-brand-300 transition-colors">
+                            <div class="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-brand-600 text-white font-bold text-sm flex items-center justify-center shadow-md">৩</div>
+                            <i class="ph-duotone ph-shield-check text-4xl text-brand-600 group-hover:scale-110 transition-transform"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-900 text-lg mb-2">নিরাপদ পেমেন্ট</h3>
+                        <p class="text-sm text-text-muted font-medium">প্ল্যাটফর্মের মাধ্যমে নিরাপদ পেমেন্ট নিশ্চিত করুন।</p>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center max-w-[220px]">
+                        <div class="w-24 h-24 glass-card rounded-3xl flex items-center justify-center mb-6 shadow-lg border-2 border-white relative group hover:border-brand-300 transition-colors">
+                            <div class="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-brand-600 text-white font-bold text-sm flex items-center justify-center shadow-md">৪</div>
+                            <i class="ph-duotone ph-book-open-text text-4xl text-brand-600 group-hover:scale-110 transition-transform"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-900 text-lg mb-2">পড়া শুরু করুন</h3>
+                        <p class="text-sm text-text-muted font-medium">বই পৌঁছে গেলে নতুন গল্পের জগতে হারিয়ে যান।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-16 px-4 md:px-6 relative z-10">
+            <div class="max-w-7xl mx-auto rounded-[2.5rem] overflow-hidden relative shadow-2xl">
+                <!-- Deep Blue Glass Background -->
+                <div class="absolute inset-0 bg-gradient-to-br from-brand-900 to-brand-700 z-0"></div>
+                <!-- Decorative light blobs inside -->
+                <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-400/40 rounded-full blur-3xl z-0"></div>
+                <div class="absolute bottom-[-20%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/30 rounded-full blur-3xl z-0"></div>
+                
+                <!-- Glass texture overlay -->
+                <div class="absolute inset-0 bg-white/5 backdrop-blur-sm z-0 border border-white/20 rounded-[2.5rem]"></div>
+
+                <div class="relative z-10 flex flex-col md:flex-row">
+                    <div class="w-full md:w-[55%] p-8 md:p-16 flex flex-col justify-center text-white">
+                        <div class="bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-xs font-bold w-max mb-6">
+                            বিক্রেতা হোন
+                        </div>
+                        <h2 class="font-serif text-3xl md:text-5xl font-bold mb-6 leading-[1.2] text-white">আপনার তাকের বইগুলো কি আর পড়া হয় না?</h2>
+                        <p class="text-base md:text-lg text-brand-100 mb-10 leading-relaxed font-medium">
+                            বইগুলো ধুলো জমিয়ে রাখার চেয়ে এমন একজন পাঠকের কাছে পৌঁছে দিন, যে বইটি সত্যিই পড়তে চায়। আপনার একটি বই অন্য কারও জন্য নতুন জ্ঞান হতে পারে।
+                        </p>
+                        <div class="flex flex-col sm:flex-row items-center gap-5">
+                            <button class="w-full sm:w-auto bg-white text-brand-900 px-8 py-4 rounded-full font-bold text-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:scale-105 transition-all">
+                                একটি বই বিক্রি করুন
+                            </button>
+                            <span class="text-sm text-brand-200 font-medium flex items-center gap-2">
+                                <i class="ph-fill ph-clock text-lg text-brand-300"></i> মাত্র ২ মিনিট সময় লাগবে
+                            </span>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-[45%] h-[300px] md:h-auto p-4 md:p-8">
+                        <div class="w-full h-full rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl relative">
+                            <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 md:py-24 px-4 md:px-6 relative z-10">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
+                
+                <!-- Nearby Books -->
+                <div class="w-full md:w-1/3">
+                    <div class="flex items-center gap-2 text-brand-600 font-bold mb-3">
+                        <i class="ph-fill ph-map-pin-line text-xl"></i> লোকেশন
+                    </div>
+                    <h2 class="font-serif text-3xl font-bold text-brand-950 mb-4">আপনার কাছাকাছি বই</h2>
+                    <p class="text-text-muted font-medium mb-8 leading-relaxed">আপনার এলাকার পাঠকদের কাছ থেকে বই খুঁজে নিন। ডেলিভারি চার্জ বাঁচবে এবং দ্রুত বই হাতে পাবেন।</p>
+                    
+                    <!-- Stylized Glass Map Visual -->
+                    <div class="glass-card h-[250px] rounded-3xl relative overflow-hidden flex items-center justify-center p-4">
+                        <div class="absolute inset-0 bg-brand-50/50 backdrop-blur-sm -z-10"></div>
+                        <i class="ph-duotone ph-map-trifold text-7xl text-brand-200"></i>
+                        
+                        <!-- Pings -->
+                        <div class="absolute top-1/3 left-1/4 w-4 h-4 bg-brand-600 rounded-full shadow-[0_0_0_6px_rgba(37,99,235,0.2)] animate-pulse border-2 border-white"></div>
+                        <div class="absolute bottom-1/3 right-1/3 w-3 h-3 bg-teal-500 rounded-full shadow-[0_0_0_4px_rgba(20,184,166,0.2)] animate-pulse border border-white" style="animation-delay: 1s;"></div>
+                        
+                        <div class="absolute bottom-4 left-4 right-4 glass-panel p-3 rounded-2xl shadow-lg text-sm flex items-center justify-between border-white/80">
+                            <span class="font-bold text-brand-900 flex items-center gap-2"><i class="ph-fill ph-navigation-arrow text-brand-600"></i> মিরপুর, ঢাকা</span>
+                            <span class="text-xs font-bold text-brand-600 bg-brand-100 px-2 py-1 rounded-md cursor-pointer hover:bg-brand-200 transition-colors">পরিবর্তন</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- List of nearby books -->
+                <div class="w-full md:w-2/3">
+                    <div class="flex md:grid md:grid-cols-2 gap-5 overflow-x-auto hide-scrollbar snap-x pb-4 md:pb-0">
+                        
+                        <div class="snap-start shrink-0 w-[300px] md:w-auto flex gap-4 glass-card p-3 rounded-3xl group cursor-pointer hover:bg-white/60">
+                            <div class="w-24 h-32 shrink-0 bg-white rounded-2xl overflow-hidden shadow-sm border border-brand-100">
+                                <img src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1653275222i/50991951.jpg" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex flex-col justify-between py-2 w-full">
+                                <div>
+                                    <h4 class="font-serif font-bold text-brand-950 text-lg line-clamp-1">প্রীতিলতা</h4>
+                                    <p class="text-sm font-medium text-text-muted mt-0.5">সেলিনা হোসেন</p>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-xl text-brand-600">৳১২০</div>
+                                    <div class="text-[11px] font-bold text-text-muted flex items-center gap-1.5 mt-2 bg-white/50 px-2 py-1 rounded-lg w-max border border-white">
+                                        <i class="ph-bold ph-person-simple-walk text-brand-500"></i> ১.২ কিমি দূরে
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="snap-start shrink-0 w-[300px] md:w-auto flex gap-4 glass-card p-3 rounded-3xl group cursor-pointer hover:bg-white/60">
+                            <div class="w-24 h-32 shrink-0 bg-white rounded-2xl overflow-hidden shadow-sm border border-brand-100">
+                                <img src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1653275222i/50991951.jpg" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex flex-col justify-between py-2 w-full">
+                                <div>
+                                    <h4 class="font-serif font-bold text-brand-950 text-lg line-clamp-1">প্রীতিলতা</h4>
+                                    <p class="text-sm font-medium text-text-muted mt-0.5">সেলিনা হোসেন</p>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-xl text-brand-600">৳১২০</div>
+                                    <div class="text-[11px] font-bold text-text-muted flex items-center gap-1.5 mt-2 bg-white/50 px-2 py-1 rounded-lg w-max border border-white">
+                                        <i class="ph-bold ph-person-simple-walk text-brand-500"></i> ১.২ কিমি দূরে
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="snap-start shrink-0 w-[300px] md:w-auto flex gap-4 glass-card p-3 rounded-3xl group cursor-pointer hover:bg-white/60">
+                            <div class="w-24 h-32 shrink-0 bg-white rounded-2xl overflow-hidden shadow-sm border border-brand-100">
+                                <img src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1653275222i/50991951.jpg" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex flex-col justify-between py-2 w-full">
+                                <div>
+                                    <h4 class="font-serif font-bold text-brand-950 text-lg line-clamp-1">প্রীতিলতা</h4>
+                                    <p class="text-sm font-medium text-text-muted mt-0.5">সেলিনা হোসেন</p>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-xl text-brand-600">৳১২০</div>
+                                    <div class="text-[11px] font-bold text-text-muted flex items-center gap-1.5 mt-2 bg-white/50 px-2 py-1 rounded-lg w-max border border-white">
+                                        <i class="ph-bold ph-person-simple-walk text-brand-500"></i> ১.২ কিমি দূরে
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="snap-start shrink-0 w-[300px] md:w-auto flex gap-4 glass-card p-3 rounded-3xl group cursor-pointer hover:bg-white/60">
+                            <div class="w-24 h-32 shrink-0 bg-white rounded-2xl overflow-hidden shadow-sm border border-brand-100">
+                                <img src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1653275222i/50991951.jpg" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex flex-col justify-between py-2 w-full">
+                                <div>
+                                    <h4 class="font-serif font-bold text-brand-950 text-lg line-clamp-1">নকশী কাঁথার মাঠ</h4>
+                                    <p class="text-sm font-medium text-text-muted mt-0.5">জসীমউদ্দীন</p>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-xl text-brand-600">৳৯০</div>
+                                    <div class="text-[11px] font-bold text-text-muted flex items-center gap-1.5 mt-2 bg-white/50 px-2 py-1 rounded-lg w-max border border-white">
+                                        <i class="ph-bold ph-person-simple-walk text-brand-500"></i> ২.৫ কিমি দূরে
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="py-16 md:py-24 px-4 md:px-6 relative z-10">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="inline-block bg-brand-100 text-brand-700 font-bold px-4 py-1.5 rounded-full text-xs mb-4 border border-brand-200">
+                        কমিউনিটি
+                    </span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-950">পাঠকেরা কী বলছেন?</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                    
+                    <div class="glass-card p-8 rounded-[2rem] relative">
+                        <i class="ph-fill ph-quotes text-4xl text-brand-200 absolute top-6 right-6"></i>
+                        <div class="flex text-yellow-400 text-sm mb-6 drop-shadow-sm">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="text-brand-900 text-lg font-serif mb-8 leading-relaxed font-medium">"পুরোনো বই এত সহজে খুঁজে পাব ভাবিনি। অ্যাপের মতো ব্যবহার করা যায় ওয়েবসাইটটি। খুব সুন্দর ডিজাইন।"</p>
+                        <div class="flex items-center gap-4 pt-4 border-t border-brand-200/50">
+                            <div class="w-12 h-12 bg-gradient-to-br from-brand-400 to-brand-600 rounded-full flex items-center justify-center font-bold text-white text-lg shadow-inner">র</div>
+                            <div>
+                                <h5 class="font-bold text-brand-950">রাকিব হাসান</h5>
+                                <p class="text-xs text-text-muted font-medium">ঢাকা বিশ্ববিদ্যালয়</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-[2rem] relative md:-translate-y-4">
+                        <i class="ph-fill ph-quotes text-4xl text-brand-200 absolute top-6 right-6"></i>
+                        <div class="flex text-yellow-400 text-sm mb-6 drop-shadow-sm">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star-half"></i>
+                        </div>
+                        <p class="text-brand-900 text-lg font-serif mb-8 leading-relaxed font-medium">"বিক্রেতার সঙ্গে সরাসরি চ্যাট করে কথা বলতে পারাটা সবচেয়ে ভালো লেগেছে। বইটা একদম বর্ণনার মতোই পেয়েছি।"</p>
+                        <div class="flex items-center gap-4 pt-4 border-t border-brand-200/50">
+                            <div class="w-12 h-12 bg-gradient-to-br from-teal-400 to-teal-600 rounded-full flex items-center justify-center font-bold text-white text-lg shadow-inner">স</div>
+                            <div>
+                                <h5 class="font-bold text-brand-950">সাদিয়া রহমান</h5>
+                                <p class="text-xs text-text-muted font-medium">ক্রেতা</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-[2rem] relative">
+                        <i class="ph-fill ph-quotes text-4xl text-brand-200 absolute top-6 right-6"></i>
+                        <div class="flex text-yellow-400 text-sm mb-6 drop-shadow-sm">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="text-brand-900 text-lg font-serif mb-8 leading-relaxed font-medium">"আমি আমার পড়া অনেকগুলো উপন্যাস বিক্রি করেছি। যাচাইকৃত ব্যাজ থাকায় ক্রেতারাও বিশ্বাস করে কেনে।"</p>
+                        <div class="flex items-center gap-4 pt-4 border-t border-brand-200/50">
+                            <div class="w-12 h-12 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-full flex items-center justify-center font-bold text-white text-lg shadow-inner">অ</div>
+                            <div>
+                                <h5 class="font-bold text-brand-950 flex items-center gap-1">অনিক <i class="ph-fill ph-seal-check text-brand-500 text-sm"></i></h5>
+                                <p class="text-xs text-text-muted font-medium">যাচাইকৃত বিক্রেতা</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32 px-4 text-center relative z-10">
+            <div class="max-w-3xl mx-auto glass-card p-10 md:p-16 rounded-[3rem] border border-white shadow-2xl relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-b from-white/40 to-transparent pointer-events-none"></div>
+                <h2 class="font-serif text-3xl md:text-5xl font-bold text-brand-950 mb-6 leading-tight relative z-10">আপনার পরের বইটি হয়তো কারও তাকেই অপেক্ষা করছে।</h2>
+                <p class="text-brand-800 text-lg mb-10 font-medium relative z-10">আজই যোগ দিন আমাদের বইপ্রেমীদের বিশাল কমিউনিটিতে।</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-5 relative z-10">
+                    <button class="bg-gradient-to-r from-brand-600 to-brand-500 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-lg hover:shadow-brand-500/40 hover:-translate-y-1 transition-all border border-brand-400">
+                        বই খুঁজুন
+                    </button>
+                    <button class="bg-white text-brand-900 px-10 py-4 rounded-full font-bold text-lg hover:bg-brand-50 transition-all border border-brand-200 shadow-sm">
+                        বই বিক্রি করুন
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 md:pb-12 px-4 md:px-6 md:mb-0 mb-[75px] relative z-10 rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] mt-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-16">
+                
+                <!-- Column 1 -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-6 text-white">
+                        <i class="ph-fill ph-books text-3xl text-brand-400"></i>
+                        <span class="font-serif font-bold text-2xl tracking-tight">বইবিনিময়</span>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed pr-4 font-medium">
+                        বাংলাদেশের পাঠকদের জন্য তৈরি পুরোনো ও ব্যবহৃত বই কেনাবেচার সবচেয়ে বড় অনলাইন প্ল্যাটফর্ম।
+                    </p>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="col-span-1">
+                    <h4 class="font-bold text-white mb-6 text-lg">কেনাকাটা</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">বই খুঁজুন</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">বিভাগসমূহ</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">বিনামূল্যের বই</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors flex items-center gap-1">যাচাইকৃত ব্যবসা <i class="ph-fill ph-seal-check text-brand-400"></i></a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div class="col-span-1">
+                    <h4 class="font-bold text-white mb-6 text-lg">বিক্রি করুন</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">বই বিক্রি করুন</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">ব্যবসায়িক অ্যাকাউন্ট</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">বিক্রেতা নির্দেশিকা</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 -->
+                <div class="col-span-1">
+                    <h4 class="font-bold text-white mb-6 text-lg">সহায়তা</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">সহায়তা কেন্দ্র</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">যোগাযোগ</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">নিরাপদ লেনদেন</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">অভিযোগ জানান</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 5 -->
+                <div class="col-span-1">
+                    <h4 class="font-bold text-white mb-6 text-lg">নীতিমালা</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">ব্যবহারের শর্ত</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">গোপনীয়তা</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">ক্রেতা নীতি</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors">বিক্রেতা নীতি</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-700/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400 font-medium">
+                <p>&copy; ২০২৬ বইবিনিময়। সর্বস্বত্ব সংরক্ষিত।</p>
+                <p class="flex items-center gap-1">
+                    <i class="ph-fill ph-heart text-red-400"></i> বাংলাদেশের পাঠকদের জন্য তৈরি।
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Desktop Header Sticky Glass behavior tuning
+        const header = document.querySelector('header > div');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-md', 'border-white');
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+                header.style.backdropFilter = 'blur(20px)';
+            } else {
+                header.classList.remove('shadow-md', 'border-white');
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.65)';
+            }
+        });
+    </script>
+</body>
+</html>
