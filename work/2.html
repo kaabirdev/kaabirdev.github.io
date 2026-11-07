@@ -1,0 +1,1290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f8f7">
+  <title>Carely — Healthcare, made simpler</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #183432;
+      --muted: #7b8c89;
+      --teal: #087f78;
+      --teal-dark: #06645f;
+      --mint: #e5f5f1;
+      --line: #eaf0ee;
+      --page: #f5f8f7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .desktop-message {
+      display: none;
+    }
+
+    button, input { font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+    img { display: block; max-width: 100%; }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1240px;
+      min-height: 100vh;
+      margin-inline: auto;
+      background: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .safe-bottom {
+      padding-bottom: calc(104px + env(safe-area-inset-bottom));
+    }
+
+    .safe-bottom > footer {
+      margin-bottom: calc(-104px - env(safe-area-inset-bottom));
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .service-card,
+    .doctor-card {
+      min-width: 0;
+    }
+
+    .service-card span {
+      overflow-wrap: anywhere;
+      line-height: 1.2;
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { scrollbar-width: none; }
+
+    /* Responsive dashboard */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "hero"
+        "services"
+        "nearby"
+        "doctors"
+        "pharmacy"
+        "blood";
+    }
+
+    .hero-section { grid-area: hero; }
+    .services-section { grid-area: services; }
+    .nearby-section { grid-area: nearby; }
+    .doctors-section { grid-area: doctors; min-width: 0; }
+    .pharmacy-section { grid-area: pharmacy; }
+    .blood-section { grid-area: blood; }
+
+    /* Liquid-glass bottom navigation */
+    .glass-dock {
+      background: rgba(255, 255, 255, .77);
+      border: 1px solid rgba(255, 255, 255, .88);
+      box-shadow:
+        0 12px 36px rgba(17, 65, 61, .17),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
+      backdrop-filter: blur(22px) saturate(170%);
+      -webkit-backdrop-filter: blur(22px) saturate(170%);
+    }
+
+    .nav-item {
+      padding: .75rem;
+      color: #64748b;
+      transition:
+        padding .38s cubic-bezier(.22, 1, .36, 1),
+        color .24s ease,
+        background-color .38s cubic-bezier(.22, 1, .36, 1),
+        transform .24s ease;
+    }
+
+    .nav-item:hover {
+      transform: translateY(-1px);
+    }
+
+    .nav-item.is-active {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .nav-item span {
+      display: block;
+      max-width: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateX(-6px);
+      white-space: nowrap;
+      transition:
+        max-width .38s cubic-bezier(.22, 1, .36, 1),
+        opacity .2s ease,
+        transform .38s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .nav-item.is-active span {
+      max-width: 80px;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .nav-item > svg {
+      transition: transform .38s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .nav-item.is-active > svg {
+      transform: scale(1.05);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      z-index: 80;
+      left: 50%;
+      bottom: calc(100px + env(safe-area-inset-bottom));
+      max-width: calc(100vw - 32px);
+      transform: translate(-50%, 12px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    /* Right-side menu drawer */
+    .drawer-overlay {
+      position: fixed;
+      z-index: 60;
+      inset: 0;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity .22s ease, visibility .22s ease;
+    }
+
+    .drawer-overlay.is-open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .drawer-backdrop {
+      position: absolute;
+      inset: 0;
+      border: 0;
+      background: rgba(16, 39, 36, .38);
+      backdrop-filter: blur(3px);
+    }
+
+    .drawer-panel {
+      position: absolute;
+      inset: 0 0 0 auto;
+      display: flex;
+      width: min(390px, 88vw);
+      flex-direction: column;
+      overflow-y: auto;
+      background: white;
+      padding: 24px;
+      box-shadow: -20px 0 60px rgba(24, 52, 50, .16);
+      transform: translateX(105%);
+      transition: transform .28s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .drawer-overlay.is-open .drawer-panel {
+      transform: translateX(0);
+    }
+
+    .drawer-welcome {
+      position: relative;
+      min-height: 142px;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        linear-gradient(135deg, rgba(238, 247, 244, .98), rgba(225, 244, 239, .9));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8);
+    }
+
+    .drawer-welcome::before,
+    .drawer-welcome::after {
+      position: absolute;
+      z-index: -1;
+      border-radius: 999px;
+      content: "";
+      pointer-events: none;
+    }
+
+    .drawer-welcome::before {
+      top: -46px;
+      right: -34px;
+      width: 142px;
+      height: 142px;
+      border: 20px solid rgba(8, 127, 120, .09);
+    }
+
+    .drawer-welcome::after {
+      right: 68px;
+      bottom: -34px;
+      width: 92px;
+      height: 92px;
+      background: rgba(255, 255, 255, .42);
+    }
+
+    .welcome-illustration {
+      position: absolute;
+      right: 14px;
+      top: 20px;
+      display: grid;
+      width: 76px;
+      height: 76px;
+      place-items: center;
+      border: 7px solid rgba(255, 255, 255, .72);
+      border-radius: 28px;
+      background: linear-gradient(145deg, #0d9188, #08706b);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(8, 127, 120, .2);
+      transform: rotate(5deg);
+      animation: welcome-float 4s ease-in-out infinite;
+    }
+
+    .welcome-illustration::after {
+      position: absolute;
+      right: -9px;
+      top: -9px;
+      display: grid;
+      width: 25px;
+      height: 25px;
+      place-items: center;
+      border: 3px solid #e1f4ef;
+      border-radius: 999px;
+      background: #f58a67;
+      color: #fff;
+      content: "+";
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    @keyframes welcome-float {
+      0%, 100% { transform: translateY(0) rotate(5deg); }
+      50% { transform: translateY(-5px) rotate(2deg); }
+    }
+
+    .welcome-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 175px;
+    }
+
+    .welcome-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 10px;
+      color: var(--teal);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .welcome-illustration {
+        animation: none;
+      }
+    }
+
+    /* AI chat */
+    .chat-fab {
+      position: fixed;
+      z-index: 45;
+      right: max(16px, calc((100vw - 1240px) / 2 + 28px));
+      bottom: calc(98px + env(safe-area-inset-bottom));
+      display: grid;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      border: 0;
+      border-radius: 20px;
+      background: var(--teal);
+      color: white;
+      box-shadow: 0 10px 28px rgba(8, 127, 120, .28);
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .chat-fab:hover { background: var(--teal-dark); transform: translateY(-2px); }
+
+    .chat-panel {
+      position: fixed;
+      z-index: 46;
+      right: max(16px, calc((100vw - 1240px) / 2 + 28px));
+      bottom: calc(164px + env(safe-area-inset-bottom));
+      display: flex;
+      width: min(360px, calc(100vw - 32px));
+      height: min(470px, calc(100dvh - 200px));
+      min-height: 330px;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid #e5eeeb;
+      border-radius: 24px;
+      background: white;
+      box-shadow: 0 22px 70px rgba(24, 52, 50, .22);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px) scale(.98);
+      transform-origin: bottom right;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .chat-panel.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .chat-messages {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .chat-bubble {
+      max-width: 85%;
+      overflow-wrap: anywhere;
+      border-radius: 16px;
+      padding: 10px 12px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .chat-bubble.bot {
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
+      background: #f0f6f4;
+      color: var(--ink);
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
+      background: var(--teal);
+      color: white;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    @media (min-width: 768px) {
+      body {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .app-shell {
+        display: none;
+      }
+
+      .desktop-message {
+        display: flex;
+        width: min(460px, 100%);
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: #fff;
+        padding: 36px 28px;
+        text-align: center;
+        box-shadow: 0 24px 80px rgba(31, 71, 65, .12);
+      }
+
+      .desktop-message-icon {
+        display: grid;
+        width: 56px;
+        height: 56px;
+        place-items: center;
+        border-radius: 18px;
+        background: var(--mint);
+        color: var(--teal);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="desktop-message" role="status" aria-live="polite">
+    <span class="desktop-message-icon" aria-hidden="true">
+      <i data-lucide="smartphone" class="h-6 w-6"></i>
+    </span>
+    <h1 class="text-xl font-extrabold text-[#183432]">Mobile view only</h1>
+    <p class="max-w-sm text-sm leading-6 text-[#7b8c89]">
+      This UI design is optimized for mobile screens. Please open it on a phone or narrow your browser window to continue.
+    </p>
+  </section>
+
+  <main class="app-shell safe-bottom">
+    <!-- Header -->
+    <header class="px-5 pt-5">
+      <div class="flex items-center justify-between gap-3">
+        <a href="#" class="flex min-w-0 items-center gap-2.5" aria-label="Carely home">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-[#087f78] text-white">
+            <i data-lucide="heart-pulse" class="h-5 w-5"></i>
+          </span>
+          <span class="text-[21px] font-extrabold tracking-tight text-[#183432]">
+            carely<span class="text-[#087f78]">.</span>
+          </span>
+        </a>
+
+        <button id="menuOpen"
+                class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-[#eaf0ee] bg-white text-[#183432]"
+                aria-label="Open menu"
+                aria-expanded="false">
+          <i data-lucide="menu" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <!-- Custom location dropdown -->
+      <div class="relative mt-5 inline-block">
+        <button id="locationToggle"
+                class="flex max-w-full items-center gap-2 text-left"
+                aria-expanded="false"
+                aria-haspopup="true">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#e5f5f1] text-[#087f78]">
+            <i data-lucide="map-pin" class="h-4 w-4"></i>
+          </span>
+          <span class="min-w-0">
+            <span class="block text-[11px] font-semibold uppercase tracking-[.12em] text-[#91a09d]">
+              Your location
+            </span>
+            <span class="flex items-center gap-1 text-sm font-bold text-[#183432]">
+              <span id="currentLocation">San Francisco, CA</span>
+              <i data-lucide="chevron-down" class="h-4 w-4 text-[#7b8c89]"></i>
+            </span>
+          </span>
+        </button>
+
+        <div id="locationMenu"
+             class="absolute left-0 top-[calc(100%+10px)] z-30 hidden w-64 rounded-2xl border border-[#eaf0ee] bg-white p-2 shadow-xl">
+          <p class="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-[.12em] text-[#91a09d]">
+            Choose location
+          </p>
+          <button id="useCurrentLocation"
+                  class="location-option flex w-full items-center gap-3 rounded-xl bg-[#e5f5f1] px-3 py-3 text-left text-sm font-bold text-[#087f78] hover:bg-[#d8f0eb]"
+                  type="button">
+            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white">
+              <i data-lucide="locate-fixed" class="h-4 w-4"></i>
+            </span>
+            <span>
+              <span class="block">Use current location</span>
+              <span class="mt-0.5 block text-[10px] font-medium text-[#7b8c89]">Find care near you</span>
+            </span>
+          </button>
+          <div class="my-1 border-t border-[#edf1ef]"></div>
+          <button class="location-option flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold hover:bg-[#f3f8f6]"
+                  data-location="San Francisco, CA">
+            <i data-lucide="map-pin" class="h-4 w-4 text-[#087f78]"></i>
+            San Francisco, CA
+          </button>
+          <button class="location-option flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold hover:bg-[#f3f8f6]"
+                  data-location="Oakland, CA">
+            <i data-lucide="map-pin" class="h-4 w-4 text-[#087f78]"></i>
+            Oakland, CA
+          </button>
+          <button class="location-option flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold hover:bg-[#f3f8f6]"
+                  data-location="Berkeley, CA">
+            <i data-lucide="map-pin" class="h-4 w-4 text-[#087f78]"></i>
+            Berkeley, CA
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Search -->
+    <section class="search-section px-5 pt-5">
+      <label class="flex h-[54px] items-center gap-3 rounded-2xl border border-[#eaf0ee] bg-[#f8faf9] px-4 focus-within:border-[#087f78] focus-within:ring-4 focus-within:ring-[#087f78]/10">
+        <i data-lucide="search" class="h-5 w-5 shrink-0 text-[#7b8c89]"></i>
+        <input id="search"
+               type="search"
+               placeholder="Doctors, clinics, medicines..."
+               class="min-w-0 flex-1 bg-transparent text-sm text-[#183432] outline-none placeholder:text-[#99a7a4]"
+               aria-label="Search healthcare services">
+        <button id="clearSearch"
+                class="hidden shrink-0 text-xs font-bold text-[#087f78]"
+                type="button">
+          Clear
+        </button>
+      </label>
+    </section>
+
+    <div class="dashboard-grid">
+      <!-- Hero -->
+      <section class="hero-section px-5 pt-5">
+        <div class="relative overflow-hidden rounded-[26px] bg-[#087f78] p-5 text-white">
+          <div class="pointer-events-none absolute -right-8 -top-10 h-40 w-40 rounded-full border-[24px] border-white/10"></div>
+          <div class="pointer-events-none absolute -bottom-16 right-20 h-32 w-32 rounded-full bg-white/[.07]"></div>
+
+          <div class="relative max-w-[420px]">
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-[11px] font-semibold">
+              <i data-lucide="sparkles" class="h-3.5 w-3.5"></i>
+              Care that fits your life
+            </span>
+            <h1 class="mt-4 text-[26px] font-extrabold leading-[1.12] tracking-tight">
+              Your health,<br>in good hands.
+            </h1>
+            <p class="mt-2 max-w-[280px] text-sm leading-5 text-white/80">
+              Find trusted care and book your next visit with ease.
+            </p>
+            <button class="mt-5 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-bold text-[#087f78] shadow-sm"
+                    data-scroll="doctors">
+              Find a doctor
+              <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+            </button>
+          </div>
+
+          <div class="absolute bottom-5 right-5 hidden h-24 w-24 place-items-center rounded-full bg-white/10 sm:grid">
+            <i data-lucide="heart-pulse" class="h-12 w-12 text-white/90"></i>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services -->
+      <section class="services-section px-5 pt-7">
+        <div class="section-heading mb-4">
+          <div>
+            <h2 class="text-lg font-extrabold tracking-tight">Explore services</h2>
+            <p class="mt-0.5 text-xs text-[#7b8c89]">Care for every part of your day</p>
+          </div>
+          <button class="shrink-0 text-xs font-bold text-[#087f78]" data-toast="Showing all services">
+            View all
+          </button>
+        </div>
+
+        <div class="grid grid-cols-4 gap-3">
+          <button class="service-card searchable flex flex-col items-center gap-2.5 rounded-2xl border border-[#edf1ef] bg-white px-1.5 py-3.5 text-center transition hover:border-[#b9ded7]"
+                  data-keywords="doctor doctors specialist appointment"
+                  data-service="Doctors">
+            <span class="grid h-12 w-12 place-items-center rounded-[17px] bg-[#e5f5f1] text-[#087f78]">
+              <i data-lucide="stethoscope" class="h-[21px] w-[21px]"></i>
+            </span>
+            <span class="text-[11px] font-bold">Doctors</span>
+          </button>
+
+          <button class="service-card searchable flex flex-col items-center gap-2.5 rounded-2xl border border-[#edf1ef] bg-white px-1.5 py-3.5 text-center transition hover:border-[#b9ded7]"
+                  data-keywords="hospital clinic emergency nearby"
+                  data-service="Hospitals">
+            <span class="grid h-12 w-12 place-items-center rounded-[17px] bg-[#fff0e9] text-[#e47d5e]">
+              <i data-lucide="hospital" class="h-[21px] w-[21px]"></i>
+            </span>
+            <span class="text-[11px] font-bold">Hospitals</span>
+          </button>
+
+          <button class="service-card searchable flex flex-col items-center gap-2.5 rounded-2xl border border-[#edf1ef] bg-white px-1.5 py-3.5 text-center transition hover:border-[#b9ded7]"
+                  data-keywords="pharmacy medicines prescription drug"
+                  data-service="Pharmacy">
+            <span class="grid h-12 w-12 place-items-center rounded-[17px] bg-[#edf0ff] text-[#6973c7]">
+              <i data-lucide="pill" class="h-[21px] w-[21px]"></i>
+            </span>
+            <span class="text-[11px] font-bold">Pharmacy</span>
+          </button>
+
+          <button class="service-card searchable flex flex-col items-center gap-2.5 rounded-2xl border border-[#edf1ef] bg-white px-1.5 py-3.5 text-center transition hover:border-[#b9ded7]"
+                  data-keywords="blood bank donor donation"
+                  data-service="Blood bank">
+            <span class="grid h-12 w-12 place-items-center rounded-[17px] bg-[#ffedf0] text-[#d9687b]">
+              <i data-lucide="droplet" class="h-[21px] w-[21px]"></i>
+            </span>
+            <span class="text-[11px] font-bold">Blood bank</span>
+          </button>
+
+          <button class="service-card searchable flex flex-col items-center gap-2.5 rounded-2xl border border-[#edf1ef] bg-white px-1.5 py-3.5 text-center transition hover:border-[#b9ded7]"
+                  data-keywords="lab test diagnostics"
+                  data-service="Lab tests">
+            <span class="grid h-12 w-12 place-items-center rounded-[17px] bg-[#fff5df] text-[#d79b32]">
+              <i data-lucide="flask-conical" class="h-[21px] w-[21px]"></i>
+            </span>
+            <span class="text-[11px] font-bold">Lab tests</span>
+          </button>
+
+          <button class="service-card searchable flex flex-col items-center gap-2.5 rounded-2xl border border-[#edf1ef] bg-white px-1.5 py-3.5 text-center transition hover:border-[#b9ded7]"
+                  data-keywords="dentist dental teeth"
+                  data-service="Dental">
+            <span class="grid h-12 w-12 place-items-center rounded-[17px] bg-[#eaf4ff] text-[#4b8fca]">
+              <i data-lucide="smile" class="h-[21px] w-[21px]"></i>
+            </span>
+            <span class="text-[11px] font-bold">Dental</span>
+          </button>
+
+          <button class="service-card searchable flex flex-col items-center gap-2.5 rounded-2xl border border-[#edf1ef] bg-white px-1.5 py-3.5 text-center transition hover:border-[#b9ded7]"
+                  data-keywords="mental health therapy"
+                  data-service="Wellness">
+            <span class="grid h-12 w-12 place-items-center rounded-[17px] bg-[#f3edff] text-[#9168c4]">
+              <i data-lucide="brain" class="h-[21px] w-[21px]"></i>
+            </span>
+            <span class="text-[11px] font-bold">Wellness</span>
+          </button>
+
+          <button class="service-card searchable flex flex-col items-center gap-2.5 rounded-2xl border border-[#edf1ef] bg-white px-1.5 py-3.5 text-center transition hover:border-[#b9ded7]"
+                  data-keywords="ambulance urgent emergency"
+                  data-service="Emergency">
+            <span class="grid h-12 w-12 place-items-center rounded-[17px] bg-[#e9f5f4] text-[#348c87]">
+              <i data-lucide="siren" class="h-[21px] w-[21px]"></i>
+            </span>
+            <span class="text-[11px] font-bold">Emergency</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Nearby care -->
+      <section class="nearby-section px-5 pt-8">
+        <div class="section-heading mb-4">
+          <div>
+            <h2 class="text-lg font-extrabold tracking-tight">Care near you</h2>
+            <p class="mt-0.5 text-xs text-[#7b8c89]">Highly rated places in your area</p>
+          </div>
+          <button class="shrink-0 text-xs font-bold text-[#087f78]" data-toast="Showing nearby care">
+            See all
+          </button>
+        </div>
+
+        <article class="searchable overflow-hidden rounded-[22px] border border-[#edf1ef] bg-white"
+                 data-keywords="hospital clinics health san francisco urgent care">
+          <div class="relative h-36 overflow-hidden bg-[#dcefeb]">
+            <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1000&q=80"
+                 alt="Modern healthcare facility"
+                 class="h-full w-full object-cover">
+            <span class="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1.5 text-[10px] font-bold text-[#183432]">
+              <i data-lucide="badge-check" class="h-3.5 w-3.5 text-[#087f78]"></i>
+              Verified care
+            </span>
+            <button class="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/95 text-[#183432]"
+                    aria-label="Save hospital"
+                    data-toast="Saved to your favorites">
+              <i data-lucide="heart" class="h-4 w-4"></i>
+            </button>
+          </div>
+
+          <div class="p-4">
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
+                <h3 class="truncate text-sm font-extrabold">Evergreen Medical Center</h3>
+                <p class="mt-1 flex items-center gap-1 text-xs text-[#7b8c89]">
+                  <i data-lucide="map-pin" class="h-3.5 w-3.5 shrink-0"></i>
+                  <span class="truncate">Healthcare, close to home</span>
+                </p>
+              </div>
+              <span class="flex shrink-0 items-center gap-1 rounded-lg bg-[#fff5df] px-2 py-1 text-xs font-bold text-[#a97517]">
+                <i data-lucide="star" class="h-3.5 w-3.5 fill-current"></i> 4.9
+              </span>
+            </div>
+
+            <div class="mt-4 flex items-center justify-between gap-3 border-t border-[#edf1ef] pt-3">
+              <span class="flex items-center gap-1.5 text-xs font-semibold text-[#087f78]">
+                <i data-lucide="navigation" class="h-3.5 w-3.5"></i>
+                Open today
+              </span>
+              <button class="rounded-xl bg-[#e5f5f1] px-3.5 py-2.5 text-xs font-bold text-[#087f78]"
+                      data-toast="Opening directions">
+                Get directions
+              </button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- Featured doctors -->
+      <section id="doctors" class="doctors-section px-5 pt-8">
+        <div class="section-heading mb-4">
+          <div>
+            <h2 class="text-lg font-extrabold tracking-tight">Featured doctors</h2>
+            <p class="mt-0.5 text-xs text-[#7b8c89]">Trusted specialists, ready to help</p>
+          </div>
+          <button class="shrink-0 text-xs font-bold text-[#087f78]" data-toast="Showing all doctors">
+            See all
+          </button>
+        </div>
+
+        <div class="no-scrollbar -mx-5 flex gap-3 overflow-x-auto px-5 pb-1">
+          <article class="doctor-card searchable w-[260px] shrink-0 rounded-[22px] border border-[#edf1ef] bg-white p-3.5"
+                   data-keywords="doctor olivia chen cardiologist heart specialist">
+            <div class="flex items-center gap-3">
+              <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=180&q=80"
+                   alt="Dr. Olivia Chen"
+                   class="h-[58px] w-[58px] shrink-0 rounded-2xl object-cover">
+              <div class="min-w-0 flex-1">
+                <h3 class="truncate text-sm font-extrabold">Dr. Olivia Chen</h3>
+                <p class="mt-0.5 truncate text-xs text-[#7b8c89]">Cardiologist</p>
+                <p class="mt-1 flex items-center gap-1 text-[11px] font-bold text-[#a97517]">
+                    <span class="font-medium text-[#9aa7a4]">Starts from <b>৳500</b></span> 
+                  <i data-lucide="star" class="h-3 w-3 fill-current"></i> 4.9
+                  
+                </p>
+              </div>
+            </div>
+            <div class="mt-3 flex items-center justify-between gap-2 border-t border-[#edf1ef] pt-3">
+              <span class="text-[11px] text-[#7b8c89]">Available today</span>
+              <button class="rounded-lg bg-[#087f78] px-3 py-2 text-[11px] font-bold text-white"
+                      data-toast="Appointment request started">
+                Book visit
+              </button>
+            </div>
+          </article>
+
+          <article class="doctor-card searchable w-[260px] shrink-0 rounded-[22px] border border-[#edf1ef] bg-white p-3.5"
+                   data-keywords="doctor james wilson dermatologist skin specialist">
+            <div class="flex items-center gap-3">
+              <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=180&q=80"
+                   alt="Dr. James Wilson"
+                   class="h-[58px] w-[58px] shrink-0 rounded-2xl object-cover">
+              <div class="min-w-0 flex-1">
+                <h3 class="truncate text-sm font-extrabold">Dr. James Wilson</h3>
+                <p class="mt-0.5 truncate text-xs text-[#7b8c89]">Dermatologist</p>
+                <p class="mt-1 flex items-center gap-1 text-[11px] font-bold text-[#a97517]">
+                  <i data-lucide="star" class="h-3 w-3 fill-current"></i> 4.8
+                  <span class="font-medium text-[#9aa7a4]">· 98 reviews</span>
+                </p>
+              </div>
+            </div>
+            <div class="mt-3 flex items-center justify-between gap-2 border-t border-[#edf1ef] pt-3">
+              <span class="text-[11px] text-[#7b8c89]">Available tomorrow</span>
+              <button class="rounded-lg bg-[#087f78] px-3 py-2 text-[11px] font-bold text-white"
+                      data-toast="Appointment request started">
+                Book visit
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Pharmacy -->
+      <section class="pharmacy-section px-5 pt-8">
+        <article class="searchable relative overflow-hidden rounded-[22px] bg-[#eef7f4] p-4"
+                 data-keywords="pharmacy medicines prescriptions delivery">
+          <div class="pointer-events-none absolute -right-6 -top-7 h-28 w-28 rounded-full border-[18px] border-[#087f78]/[.08]"></div>
+          <div class="relative flex items-center gap-3">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white text-[#087f78] shadow-sm">
+              <i data-lucide="package-check" class="h-6 w-6"></i>
+            </span>
+            <div class="min-w-0 flex-1">
+              <span class="text-[10px] font-bold uppercase tracking-[.12em] text-[#087f78]">
+                Pharmacy, simplified
+              </span>
+              <h2 class="mt-0.5 text-base font-extrabold">Your meds, delivered.</h2>
+              <p class="mt-1 text-xs leading-5 text-[#6f8580]">
+                Refill prescriptions and find everyday essentials.
+              </p>
+            </div>
+          </div>
+          <button class="relative mt-4 inline-flex items-center gap-2 rounded-xl bg-[#087f78] px-4 py-2.5 text-xs font-bold text-white"
+                  data-toast="Opening pharmacy">
+            Explore pharmacy
+            <i data-lucide="arrow-right" class="h-4 w-4"></i>
+          </button>
+        </article>
+      </section>
+
+      <!-- Blood bank -->
+      <section class="blood-section px-5 pt-4">
+        <article class="searchable flex items-center gap-3 rounded-[22px] border border-[#f5dfe3] bg-[#fff7f7] p-4"
+                 data-keywords="blood bank donate blood donor">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#ffeaed] text-[#d9687b]">
+            <i data-lucide="droplet" class="h-6 w-6 fill-current"></i>
+          </span>
+          <div class="min-w-0 flex-1">
+            <h2 class="text-sm font-extrabold">Be someone’s lifesaver</h2>
+            <p class="mt-1 text-xs leading-5 text-[#8c777a]">
+              Find a blood bank or register as a donor.
+            </p>
+          </div>
+          <button class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white text-[#d9687b]"
+                  aria-label="Learn about blood donation"
+                  data-toast="Opening blood bank">
+            <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+          </button>
+        </article>
+      </section>
+    </div>
+
+    <!-- Right-side menu -->
+    <div id="drawerOverlay" class="drawer-overlay" aria-hidden="true">
+      <button id="drawerBackdrop" class="drawer-backdrop" aria-label="Close menu"></button>
+
+      <aside class="drawer-panel" aria-label="Main menu">
+        <div class="flex items-center justify-between">
+          <a href="#" class="flex items-center gap-2.5" aria-label="Carely home">
+            <span class="grid h-10 w-10 place-items-center rounded-2xl bg-[#087f78] text-white">
+              <i data-lucide="heart-pulse" class="h-5 w-5"></i>
+            </span>
+            <span class="text-xl font-extrabold tracking-tight">carely<span class="text-[#087f78]">.</span></span>
+          </a>
+          <button id="menuClose"
+                  class="grid h-10 w-10 place-items-center rounded-xl bg-[#f3f7f5] text-[#183432]"
+                  aria-label="Close menu">
+            <i data-lucide="x" class="h-5 w-5"></i>
+          </button>
+        </div>
+
+        <div class="drawer-welcome mt-7 rounded-2xl p-4">
+          <div class="welcome-copy">
+            <div class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-[.14em] text-[#087f78]">
+              <span class="grid h-5 w-5 place-items-center rounded-full bg-white/80">
+                <i data-lucide="sparkles" class="h-3 w-3"></i>
+              </span>
+              Care made simple
+            </div>
+            <p class="mt-2 text-xs font-semibold text-[#7b8c89]">Welcome back</p>
+            <p class="mt-1 text-base font-extrabold leading-5">How can we help today?</p>
+            <button class="welcome-action" data-toast="Opening care assistant">
+              Get started
+              <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
+            </button>
+          </div>
+          <div class="welcome-illustration" aria-hidden="true">
+            <i data-lucide="heart-pulse" class="h-9 w-9"></i>
+          </div>
+        </div>
+
+        <nav class="mt-6 space-y-1" aria-label="Menu links">
+          <button class="drawer-link flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold hover:bg-[#f3f8f6]"
+                  data-go="services">
+            <i data-lucide="grid-2x2" class="h-5 w-5 text-[#087f78]"></i> Explore services
+          </button>
+          <button class="drawer-link flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold hover:bg-[#f3f8f6]"
+                  data-go="doctors">
+            <i data-lucide="stethoscope" class="h-5 w-5 text-[#087f78]"></i> Find a doctor
+          </button>
+          <button class="drawer-link flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold hover:bg-[#f3f8f6]"
+                  data-go="nearby">
+            <i data-lucide="hospital" class="h-5 w-5 text-[#087f78]"></i> Nearby hospitals
+          </button>
+          <button class="drawer-link flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold hover:bg-[#f3f8f6]"
+                  data-go="pharmacy">
+            <i data-lucide="pill" class="h-5 w-5 text-[#087f78]"></i> Pharmacy
+          </button>
+          <button class="drawer-link flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold hover:bg-[#f3f8f6]"
+                  data-go="blood">
+            <i data-lucide="droplet" class="h-5 w-5 text-[#d9687b]"></i> Blood bank
+          </button>
+        </nav>
+
+        <div class="mt-auto border-t border-[#edf1ef] pt-5">
+          <button class="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold hover:bg-[#f3f8f6]"
+                  data-toast="Profile page coming soon">
+            <i data-lucide="user-round" class="h-5 w-5 text-[#7b8c89]"></i> My profile
+          </button>
+          <button class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold hover:bg-[#f3f8f6]"
+                  data-toast="Help center coming soon">
+            <i data-lucide="circle-help" class="h-5 w-5 text-[#7b8c89]"></i> Help and support
+          </button>
+          <p class="px-3 pt-4 text-[11px] text-[#9aa7a4]">Carely demo · Find care with confidence</p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- AI chat panel -->
+    <section id="chatPanel" class="chat-panel" aria-label="Carely AI chat" aria-hidden="true">
+      <div class="flex items-center justify-between bg-[#087f78] px-4 py-3.5 text-white">
+        <div class="flex items-center gap-2.5">
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-white/15">
+            <i data-lucide="bot" class="h-5 w-5"></i>
+          </span>
+          <div>
+            <h2 class="text-sm font-extrabold">Carely assistant</h2>
+            <p class="text-[10px] text-white/75">Here to help you find care</p>
+          </div>
+        </div>
+        <button id="chatClose" class="grid h-9 w-9 place-items-center rounded-xl hover:bg-white/10" aria-label="Close chat">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <div id="chatMessages" class="chat-messages" aria-live="polite">
+        <div class="chat-bubble bot">
+          Hi! I can help you find a doctor, hospital, pharmacy, or other care service. What are you looking for?
+        </div>
+      </div>
+
+      <form id="chatForm" class="flex items-center gap-2 border-t border-[#edf1ef] p-3">
+        <input id="chatInput"
+               type="text"
+               autocomplete="off"
+               placeholder="Ask me about care..."
+               class="min-w-0 flex-1 rounded-xl bg-[#f5f8f7] px-3.5 py-3 text-sm outline-none placeholder:text-[#99a7a4] focus:ring-2 focus:ring-[#087f78]/20"
+               aria-label="Message the Carely assistant">
+        <button class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#087f78] text-white"
+                type="submit"
+                aria-label="Send message">
+          <i data-lucide="send" class="h-4 w-4"></i>
+        </button>
+      </form>
+    </section>
+
+    <button id="chatFab" class="chat-fab" aria-label="Open AI chat" aria-expanded="false">
+      <i data-lucide="message-circle" class="h-6 w-6"></i>
+      <span class="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-white bg-[#ff9b79]"></span>
+    </button>
+
+    <!-- Mobile liquid-glass navigation -->
+    <nav class="glass-dock fixed bottom-3 left-1/2 z-30 flex w-[min(94vw,460px)] -translate-x-1/2 items-center justify-around rounded-[2rem] p-2"
+         aria-label="Mobile navigation">
+      <button class="nav-item is-active flex min-w-0 items-center gap-2 rounded-full"
+              data-tab="Home" aria-label="Home">
+        <i data-lucide="house"></i>
+        <span class="text-xs font-bold">Home</span>
+      </button>
+
+      <button class="nav-item flex min-w-0 items-center gap-2 rounded-full"
+              data-tab="Hospitals" aria-label="Hospitals">
+        <i data-lucide="hospital"></i>
+        <span class="text-xs font-bold">Hospitals</span>
+      </button>
+
+      <button class="nav-item flex min-w-0 items-center gap-2 rounded-full"
+              data-tab="Doctors" aria-label="Doctors">
+        <i data-lucide="stethoscope"></i>
+        <span class="text-xs font-bold">Doctors</span>
+      </button>
+
+      <button class="nav-item flex min-w-0 items-center gap-2 rounded-full"
+              data-tab="Pharmacy" aria-label="Pharmacy">
+        <i data-lucide="pill"></i>
+        <span class="text-xs font-bold">Pharmacy</span>
+      </button>
+
+      <button class="nav-item flex min-w-0 items-center gap-2 rounded-full"
+              data-tab="Search" aria-label="Search">
+        <i data-lucide="search"></i>
+        <span class="text-xs font-bold">Search</span>
+      </button>
+    </nav>
+
+    <div id="toast"
+         class="toast rounded-xl bg-[#183432] px-4 py-3 text-center text-sm font-semibold text-white shadow-xl"
+         role="status">
+      
+    </div>
+       
+    <footer class="mx-5 mt-12 rounded-t-[1.5rem] rounded-b-none bg-[#183432] px-5 py-7 text-white sm:mx-8 sm:px-8">
+      <div class="grid grid-cols-2 gap-7 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="col-span-2 lg:col-span-1">
+          <a href="#home" class="flex items-center gap-2 font-extrabold">
+            <span class="grid h-9 w-9 place-items-center rounded-xl bg-white/10">
+              <i data-lucide="heart-pulse"></i>
+            </span>
+            carely<span class="text-[#087f78]">.</span>
+          </a>
+          <p class="mt-3 max-w-xs text-sm leading-6 text-white/60">
+            Helping you find care, confidently and simply.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-bold">Explore</h3>
+          <div class="mt-3 grid gap-2 text-sm text-white/65">
+            <a href="#hospitals" class="hover:text-white">Hospitals</a>
+            <a href="#doctors" class="hover:text-white">Doctors</a>
+            <a href="#pharmacy" class="hover:text-white">Pharmacy</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-white">Support</h3>
+          <div class="mt-3 grid gap-2 text-sm text-white/65">
+            <a href="#services" class="hover:text-white">Help center</a>
+            <a href="#services" class="hover:text-white">Contact</a>
+            <a href="#services" class="hover:text-white">FAQs</a>
+          </div>
+        </div>
+
+        <div class="col-span-2 lg:col-span-1">
+          <h3 class="font-bold">Stay in the loop</h3>
+          <form id="newsletterForm" class="mt-3 flex gap-2">
+            <input aria-label="Email address"
+                   type="email"
+                   required
+                   placeholder="Your email"
+                   class="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/10 px-3 py-2.5 text-sm outline-none placeholder:text-white/40 focus:border-[#087f78]">
+            <button class="rounded-xl bg-[#087f78] px-3 font-bold" aria-label="Subscribe">
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="mt-7 border-t border-white/10 pt-4 text-xs text-white/45">
+        © 2025 Carely. Demo interface — service listings and actions are simulated.
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    const searchInput = document.querySelector("#search");
+    const clearSearch = document.querySelector("#clearSearch");
+    const searchableItems = [...document.querySelectorAll(".searchable")];
+    const toast = document.querySelector("#toast");
+    const drawerOverlay = document.querySelector("#drawerOverlay");
+    const menuOpen = document.querySelector("#menuOpen");
+    const locationToggle = document.querySelector("#locationToggle");
+    const locationMenu = document.querySelector("#locationMenu");
+    const chatPanel = document.querySelector("#chatPanel");
+    const chatFab = document.querySelector("#chatFab");
+    const chatMessages = document.querySelector("#chatMessages");
+    const chatInput = document.querySelector("#chatInput");
+
+    let toastTimer;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    // Live text search across service, doctor, pharmacy, and hospital cards.
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLowerCase();
+      clearSearch.classList.toggle("hidden", !query);
+
+      searchableItems.forEach((item) => {
+        const searchableText = `${item.textContent} ${item.dataset.keywords || ""}`.toLowerCase();
+        item.classList.toggle("hidden", query.length > 0 && !searchableText.includes(query));
+      });
+    });
+
+    clearSearch.addEventListener("click", () => {
+      searchInput.value = "";
+      searchInput.dispatchEvent(new Event("input"));
+      searchInput.focus();
+    });
+
+    // Toast feedback for demo actions.
+    document.querySelectorAll("[data-toast]").forEach((button) => {
+      button.addEventListener("click", () => showToast(button.dataset.toast));
+    });
+
+    // Hero call-to-action scrolls to doctors.
+    document.querySelectorAll("[data-scroll]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.getElementById(button.dataset.scroll)?.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      });
+    });
+
+    // Service tiles give simulated feedback.
+    document.querySelectorAll("[data-service]").forEach((button) => {
+      button.addEventListener("click", () => {
+        showToast(`Showing ${button.dataset.service.toLowerCase()} options`);
+      });
+    });
+
+    // Location dropdown.
+    locationToggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const isOpen = !locationMenu.classList.contains("hidden");
+      locationMenu.classList.toggle("hidden", isOpen);
+      locationToggle.setAttribute("aria-expanded", String(!isOpen));
+    });
+
+    document.querySelectorAll(".location-option").forEach((option) => {
+      if (option.id === "useCurrentLocation") return;
+
+      option.addEventListener("click", () => {
+        document.querySelector("#currentLocation").textContent = option.dataset.location;
+        locationMenu.classList.add("hidden");
+        locationToggle.setAttribute("aria-expanded", "false");
+        showToast(`Location set to ${option.dataset.location}`);
+      });
+    });
+
+    document.querySelector("#useCurrentLocation").addEventListener("click", () => {
+      if (!navigator.geolocation) {
+        showToast("Location is not supported by this browser");
+        return;
+      }
+
+      showToast("Requesting your location...");
+      navigator.geolocation.getCurrentPosition(
+        () => {
+          document.querySelector("#currentLocation").textContent = "Current location";
+          locationMenu.classList.add("hidden");
+          locationToggle.setAttribute("aria-expanded", "false");
+          showToast("Using your current location");
+        },
+        (error) => {
+          const message = error.code === error.PERMISSION_DENIED
+            ? "Location permission was denied"
+            : "Unable to find your location";
+          showToast(message);
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 }
+      );
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!locationMenu.contains(event.target) && !locationToggle.contains(event.target)) {
+        locationMenu.classList.add("hidden");
+        locationToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Menu drawer open/close.
+    function openDrawer() {
+      drawerOverlay.classList.add("is-open");
+      drawerOverlay.setAttribute("aria-hidden", "false");
+      menuOpen.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeDrawer() {
+      drawerOverlay.classList.remove("is-open");
+      drawerOverlay.setAttribute("aria-hidden", "true");
+      menuOpen.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    }
+
+    menuOpen.addEventListener("click", openDrawer);
+    document.querySelector("#menuClose").addEventListener("click", closeDrawer);
+    document.querySelector("#drawerBackdrop").addEventListener("click", closeDrawer);
+
+    document.querySelectorAll(".drawer-link[data-go]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = document.getElementById(button.dataset.go);
+        closeDrawer();
+        target?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    // Bottom navigation: active tab uses the filled glass-dock pill.
+    document.querySelectorAll(".nav-item").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("is-active", active);
+        });
+
+        if (button.dataset.tab === "Home") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else if (button.dataset.tab === "Doctors") {
+          document.querySelector(".doctors-section").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        } else if (button.dataset.tab === "Search") {
+          searchInput.focus();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else if (button.dataset.tab === "Hospitals") {
+          showToast("Hospitals section selected");
+        } else if (button.dataset.tab === "Pharmacy") {
+          showToast("Pharmacy section selected");
+        } else if (button.dataset.tab === "Explore") {
+          document.querySelector(".services-section").scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          showToast(`${button.dataset.tab} section selected`);
+        }
+      });
+    });
+
+    // Simulated AI chat widget.
+    function setChatOpen(open) {
+      chatPanel.classList.toggle("is-open", open);
+      chatPanel.setAttribute("aria-hidden", String(!open));
+      chatFab.setAttribute("aria-expanded", String(open));
+      chatFab.innerHTML = open
+        ? '<i data-lucide="x" class="h-6 w-6"></i>'
+        : '<i data-lucide="message-circle" class="h-6 w-6"></i><span class="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-white bg-[#ff9b79]"></span>';
+      lucide.createIcons();
+      if (open) chatInput.focus();
+    }
+
+    chatFab.addEventListener("click", () => {
+      setChatOpen(!chatPanel.classList.contains("is-open"));
+    });
+
+    document.querySelector("#chatClose").addEventListener("click", () => setChatOpen(false));
+
+    function addChatMessage(message, sender) {
+      const bubble = document.createElement("div");
+      bubble.className = `chat-bubble ${sender}`;
+      bubble.textContent = message;
+      chatMessages.appendChild(bubble);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getAssistantReply(message) {
+      const text = message.toLowerCase();
+
+      if (text.includes("doctor") || text.includes("specialist")) {
+        return "You can browse featured doctors in the Doctors section. Try searching by specialty, such as cardiologist or dermatologist.";
+      }
+      if (text.includes("hospital") || text.includes("clinic")) {
+        return "The Care near you card shows a nearby medical center. You can also search for hospitals or clinics above.";
+      }
+      if (text.includes("pharmacy") || text.includes("medicine") || text.includes("medication")) {
+        return "Visit the Pharmacy section to explore prescription refills and everyday medicines.";
+      }
+      if (text.includes("blood") || text.includes("donor")) {
+        return "The blood bank card can help you find a blood bank or learn about registering as a donor.";
+      }
+      if (text.includes("appointment") || text.includes("book")) {
+        return "Choose a doctor and tap Book visit to start a simulated appointment request.";
+      }
+      return "I can help you explore doctors, hospitals, pharmacy, and blood bank services. What type of care are you looking for?";
+    }
+
+    document.querySelector("#chatForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      addChatMessage(message, "user");
+      chatInput.value = "";
+
+      window.setTimeout(() => {
+        addChatMessage(getAssistantReply(message), "bot");
+      }, 450);
+    });
+
+    // Escape closes open overlays and menus.
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeDrawer();
+        setChatOpen(false);
+        locationMenu.classList.add("hidden");
+        locationToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  </script>
+</body>
+</html>
