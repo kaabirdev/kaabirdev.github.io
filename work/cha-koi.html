@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>চা কই — চা খুঁজুন, হিসাব করুন, বেঁচে থাকুন</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { bangla: ['Hind Siliguri', 'sans-serif'] },
+          colors: {
+            cha: {
+              cream: '#FFF8E9',
+              paper: '#FFFDF7',
+              ink: '#26352A',
+              leaf: '#3F6B45',
+              dark: '#25432D',
+              orange: '#EF8A43',
+              pink: '#F5C6B5',
+              yellow: '#F6D66B'
+            }
+          },
+          boxShadow: {
+            card: '0 12px 35px rgba(45, 64, 44, .09)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background: #fff8e9; }
+    .tea-pattern {
+      background-image: radial-gradient(rgba(63,107,69,.09) 1px, transparent 1px);
+      background-size: 18px 18px;
+    }
+    .steam { animation: float 2.3s ease-in-out infinite; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); opacity: .5; }
+      50% { transform: translateY(-7px); opacity: 1; }
+    }
+    .toast { animation: pop .22s ease-out; }
+    @keyframes pop {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body class="font-bangla text-cha-ink">
+  <!-- Navigation -->
+  <header class="sticky top-0 z-40 border-b border-cha-ink/5 bg-cha-cream/90 backdrop-blur">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+      <a href="#" class="flex items-center gap-2" aria-label="ChaKoi হোম">
+        <span class="grid h-10 w-10 place-items-center rounded-2xl bg-cha-leaf text-xl text-white">☕</span>
+        <span class="text-2xl font-extrabold tracking-tight">Cha<span class="text-cha-orange">Koi</span></span>
+      </a>
+
+      <div class="hidden items-center gap-7 text-sm font-semibold md:flex">
+        <a href="#stalls" class="hover:text-cha-leaf">চায়ের আড্ডা</a>
+        <a href="#calculator" class="hover:text-cha-leaf">খরচের হিসাব</a>
+        <a href="#life" class="hover:text-cha-leaf">চা-জীবন</a>
+      </div>
+
+      <button onclick="openModal()" class="rounded-full bg-cha-dark px-4 py-2.5 text-sm font-bold text-white transition hover:bg-cha-leaf">
+        + দোকান যোগ করুন
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="tea-pattern overflow-hidden">
+      <div class="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 md:grid-cols-2 md:py-20">
+        <div>
+          <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-cha-leaf/15 bg-white/70 px-4 py-2 text-sm font-semibold text-cha-leaf">
+            <span>🫖</span> চা আছে? দুনিয়া ঠিক আছে।
+          </div>
+          <h1 class="max-w-2xl text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
+            আপনার পরের<br>
+            <span class="text-cha-leaf">চায়ের আড্ডা</span> কোথায়?
+          </h1>
+          <p class="mt-5 max-w-xl text-lg leading-8 text-cha-ink/70">
+            কাছের চায়ের দোকান খুঁজুন, মাসের চা-বাজেট ধরুন, আর জানুন—
+            “আরেক কাপ” বলতে বলতে জীবনের কত কাপ গেল! 😌
+          </p>
+
+          <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+            <a href="#stalls" class="rounded-2xl bg-cha-orange px-6 py-3.5 text-center font-bold text-white shadow-lg shadow-cha-orange/20 transition hover:-translate-y-0.5">
+              🧭 চায়ের দোকান খুঁজি
+            </a>
+            <a href="#calculator" class="rounded-2xl border border-cha-ink/10 bg-white px-6 py-3.5 text-center font-bold transition hover:bg-white/70">
+              🧮 হিসাবটা দেখি
+            </a>
+          </div>
+
+          <div class="mt-7 flex items-center gap-3 text-sm text-cha-ink/60">
+            <span class="flex -space-x-2 text-xl">
+              <span class="grid h-9 w-9 place-items-center rounded-full border-2 border-cha-cream bg-yellow-100">🧑‍🍳</span>
+              <span class="grid h-9 w-9 place-items-center rounded-full border-2 border-cha-cream bg-pink-100">🧔</span>
+              <span class="grid h-9 w-9 place-items-center rounded-full border-2 border-cha-cream bg-green-100">👩‍💻</span>
+            </span>
+            <span><b class="text-cha-ink">২,৪৮১ জন</b> চা-সন্ধানী আড্ডায় আছে</span>
+          </div>
+        </div>
+
+        <div class="relative mx-auto w-full max-w-md">
+          <div class="absolute -right-2 top-8 rotate-12 rounded-2xl bg-cha-yellow px-4 py-3 text-sm font-bold shadow-card">চা না হলে কাজ জমে না! 🥲</div>
+          <div class="rounded-[2.5rem] bg-cha-leaf p-5 shadow-2xl shadow-cha-leaf/20">
+            <div class="rounded-[2rem] bg-cha-cream p-7 text-center sm:p-10">
+              <div class="mb-2 text-4xl steam">〰️</div>
+              <div class="mx-auto grid h-44 w-44 place-items-center rounded-full border-[10px] border-white bg-cha-pink text-8xl shadow-inner">
+                🫖
+              </div>
+              <p class="mt-6 text-2xl font-extrabold">চা খাও, চিন্তা কমাও</p>
+              <p class="mt-1 text-cha-ink/60">চিন্তা না কমলে আরেক কাপ।</p>
+              <div class="mt-6 flex justify-center gap-2">
+                <span class="rounded-full bg-white px-3 py-1 text-sm">গরম ☀️</span>
+                <span class="rounded-full bg-white px-3 py-1 text-sm">মিষ্টি 🍬</span>
+                <span class="rounded-full bg-white px-3 py-1 text-sm">জরুরি 😤</span>
+              </div>
+            </div>
+          </div>
+          <span class="absolute -bottom-4 -left-4 text-5xl">🍪</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tiny stats -->
+    <section class="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 py-8 sm:px-6 md:grid-cols-4">
+      <div class="rounded-2xl bg-white p-4 shadow-card"><p class="text-2xl">🫖</p><p class="mt-2 text-2xl font-extrabold">১,২৮৪</p><p class="text-sm text-cha-ink/60">চায়ের দোকান</p></div>
+      <div class="rounded-2xl bg-white p-4 shadow-card"><p class="text-2xl">🧋</p><p class="mt-2 text-2xl font-extrabold">৮,৯০২</p><p class="text-sm text-cha-ink/60">আজকের কাপ</p></div>
+      <div class="rounded-2xl bg-white p-4 shadow-card"><p class="text-2xl">🍪</p><p class="mt-2 text-2xl font-extrabold">৪,৫৬৭</p><p class="text-sm text-cha-ink/60">বিস্কুট নিখোঁজ</p></div>
+      <div class="rounded-2xl bg-white p-4 shadow-card"><p class="text-2xl">💬</p><p class="mt-2 text-2xl font-extrabold">৩,৪২১</p><p class="text-sm text-cha-ink/60">আড্ডা চলছে</p></div>
+    </section>
+
+    <!-- Stall finder -->
+    <section id="stalls" class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+      <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <div>
+          <p class="font-bold text-cha-orange">এলাকার তারকা 🌟</p>
+          <h2 class="mt-1 text-3xl font-extrabold sm:text-4xl">চায়ের আড্ডা খুঁজুন</h2>
+          <p class="mt-2 text-cha-ink/60">চা ভালো হলে রাস্তা একটু বেশি হাঁটাও যায়।</p>
+        </div>
+        <label class="relative block sm:w-72">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2">🔎</span>
+          <input id="searchInput" oninput="filterStalls()" placeholder="দোকান বা এলাকা খুঁজুন..."
+            class="w-full rounded-2xl border border-cha-ink/10 bg-white py-3 pl-11 pr-4 outline-none focus:border-cha-leaf">
+        </label>
+      </div>
+
+      <div id="stallGrid" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <article class="stall-card overflow-hidden rounded-3xl bg-white shadow-card transition hover:-translate-y-1" data-search="মামার চায়ের দোকান ধানমন্ডি">
+          <div class="flex h-36 items-center justify-center bg-gradient-to-br from-cha-yellow to-cha-orange text-7xl">🛖</div>
+          <div class="p-5">
+            <div class="flex items-start justify-between gap-2">
+              <div><h3 class="text-xl font-extrabold">মামার চায়ের দোকান</h3><p class="mt-1 text-sm text-cha-ink/60">📍 ধানমন্ডি ২৭, ঢাকা</p></div>
+              <span class="rounded-full bg-green-50 px-2.5 py-1 text-sm font-bold text-cha-leaf">★ ৪.৮</span>
+            </div>
+            <p class="mt-4 text-sm leading-6 text-cha-ink/70">লাল চায়ে এমন টান—এক কাপ বলে তিন কাপ হয়ে যায়।</p>
+            <div class="mt-4 flex items-center justify-between border-t border-cha-ink/5 pt-4">
+              <span class="text-sm">দুধ চা <b>৳২০</b> থেকে</span>
+              <span class="rounded-full bg-cha-cream px-3 py-1 text-sm">🕒 খোলা</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="stall-card overflow-hidden rounded-3xl bg-white shadow-card transition hover:-translate-y-1" data-search="চায়ের চুমুক নিউ মার্কেট">
+          <div class="flex h-36 items-center justify-center bg-gradient-to-br from-green-100 to-cha-leaf/30 text-7xl">☕</div>
+          <div class="p-5">
+            <div class="flex items-start justify-between gap-2">
+              <div><h3 class="text-xl font-extrabold">চায়ের চুমুক</h3><p class="mt-1 text-sm text-cha-ink/60">📍 নিউ মার্কেট, ঢাকা</p></div>
+              <span class="rounded-full bg-green-50 px-2.5 py-1 text-sm font-bold text-cha-leaf">★ ৪.৬</span>
+            </div>
+            <p class="mt-4 text-sm leading-6 text-cha-ink/70">চা, টোস্ট আর বন্ধুর “একটা কথা ছিল…”—সবই আছে।</p>
+            <div class="mt-4 flex items-center justify-between border-t border-cha-ink/5 pt-4">
+              <span class="text-sm">মালাই চা <b>৳৩৫</b> থেকে</span>
+              <span class="rounded-full bg-cha-cream px-3 py-1 text-sm">🕒 খোলা</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="stall-card overflow-hidden rounded-3xl bg-white shadow-card transition hover:-translate-y-1" data-search="রাতজাগা চা করওয়ান বাজার">
+          <div class="flex h-36 items-center justify-center bg-gradient-to-br from-purple-100 to-pink-200 text-7xl">🌙</div>
+          <div class="p-5">
+            <div class="flex items-start justify-between gap-2">
+              <div><h3 class="text-xl font-extrabold">রাতজাগা চা</h3><p class="mt-1 text-sm text-cha-ink/60">📍 করওয়ান বাজার, ঢাকা</p></div>
+              <span class="rounded-full bg-green-50 px-2.5 py-1 text-sm font-bold text-cha-leaf">★ ৪.৯</span>
+            </div>
+            <p class="mt-4 text-sm leading-6 text-cha-ink/70">রাত ২টায়ও চা চাই? আপনার ঘুমের সঙ্গে কথা বলুন।</p>
+            <div class="mt-4 flex items-center justify-between border-t border-cha-ink/5 pt-4">
+              <span class="text-sm">মসলা চা <b>৳৩০</b> থেকে</span>
+              <span class="rounded-full bg-cha-cream px-3 py-1 text-sm">🌙 রাতজাগা</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <p id="emptyState" class="hidden py-10 text-center text-cha-ink/60">এই নামে দোকান মেলেনি—চা খেয়ে আবার খুঁজুন। 🥲</p>
+    </section>
+
+    <!-- Calculator -->
+    <section id="calculator" class="bg-cha-dark text-white">
+      <div class="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 md:grid-cols-2 md:items-center">
+        <div>
+          <p class="font-bold text-cha-yellow">ক্যালকুলেটর, বিচারক নয় 🧮</p>
+          <h2 class="mt-2 text-3xl font-extrabold sm:text-4xl">চায়ে মাসে কত উড়ে?</h2>
+          <p class="mt-3 max-w-lg leading-7 text-white/70">হিসাবটা দেখুন। তারপর সিদ্ধান্ত নিন—সঞ্চয় করবেন, নাকি চায়ের সঙ্গে বিস্কুটও যোগ করবেন।</p>
+          <div class="mt-6 rounded-2xl bg-white/10 p-4 text-sm text-white/80">⚠️ হিসাব দেখে মন খারাপ হলে, ক্যালকুলেটর বন্ধ করে চা খান।</div>
+        </div>
+
+        <div class="rounded-3xl bg-white p-6 text-cha-ink shadow-2xl sm:p-8">
+          <label class="mb-2 block font-bold" for="cups">দিনে কত কাপ খান?</label>
+          <div class="flex items-center gap-3">
+            <button onclick="changeCups(-1)" class="grid h-12 w-12 place-items-center rounded-xl bg-cha-cream text-2xl font-bold">−</button>
+            <input id="cups" type="number" min="0" value="3" class="h-12 w-full rounded-xl border border-cha-ink/10 text-center text-xl font-bold outline-none focus:border-cha-leaf">
+            <button onclick="changeCups(1)" class="grid h-12 w-12 place-items-center rounded-xl bg-cha-cream text-2xl font-bold">+</button>
+          </div>
+
+          <label class="mb-2 mt-5 block font-bold" for="price">প্রতি কাপের দাম (৳)</label>
+          <input id="price" type="number" min="0" value="20" class="w-full rounded-xl border border-cha-ink/10 px-4 py-3 outline-none focus:border-cha-leaf">
+
+          <label class="mb-2 mt-5 block font-bold" for="cigarettesPerDay">দিনে কতটি সিগারেট খান?</label>
+          <input id="cigarettesPerDay" type="number" min="0" value="0" class="w-full rounded-xl border border-cha-ink/10 px-4 py-3 outline-none focus:border-cha-leaf">
+
+          <label class="mb-2 mt-5 block font-bold" for="cigarettePrice">প্রতি সিগারেটের দাম (৳)</label>
+          <input id="cigarettePrice" type="number" min="0" value="0" class="w-full rounded-xl border border-cha-ink/10 px-4 py-3 outline-none focus:border-cha-leaf">
+
+          <button onclick="calculateExpense()" class="mt-5 w-full rounded-xl bg-cha-orange px-5 py-3.5 font-extrabold text-white transition hover:bg-orange-600">হিসাব কষুন! 🔥</button>
+          <div id="expenseResult" class="mt-5 rounded-2xl bg-cha-cream p-4 text-center">
+            <p class="text-sm text-cha-ink/60">আপনার মাসিক চা ও সিগারেটের খরচ</p>
+            <p class="mt-1 text-3xl font-extrabold text-cha-leaf">৳ ১,৮০০</p>
+            <p class="mt-2 text-sm text-cha-ink/60">চা: ৳১,৮০০ · সিগারেট: ৳০</p>
+            <p class="mt-1 text-sm text-cha-ink/60">বছরে ৳২১,৬০০—চা কিন্তু বেশ সিরিয়াস! 😅</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Life calculator -->
+    <section id="life" class="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 md:grid-cols-2 md:items-center">
+      <div class="order-2 rounded-3xl bg-white p-6 shadow-card sm:p-8 md:order-1">
+        <p class="text-sm font-bold text-cha-orange">নির্ভুল বিজ্ঞান? না। মজার হিসাব? হ্যাঁ।</p>
+        <h2 class="mt-2 text-2xl font-extrabold">চা খেতে কত সময় গেল?</h2>
+        <div class="mt-5 grid gap-4 sm:grid-cols-2">
+          <label class="text-sm font-bold">কত বছর ধরে চা খান?
+            <input id="years" type="number" min="0" value="5" class="mt-2 w-full rounded-xl border border-cha-ink/10 px-4 py-3 outline-none focus:border-cha-leaf">
+          </label>
+          <label class="text-sm font-bold">দিনে গড়ে কত কাপ?
+            <input id="lifeCups" type="number" min="0" value="3" class="mt-2 w-full rounded-xl border border-cha-ink/10 px-4 py-3 outline-none focus:border-cha-leaf">
+          </label>
+          <label class="text-sm font-bold">দিনে গড়ে কতটি সিগারেট?
+            <input id="lifeCigarettes" type="number" min="0" value="0" class="mt-2 w-full rounded-xl border border-cha-ink/10 px-4 py-3 outline-none focus:border-cha-leaf">
+          </label>
+        </div>
+        <button onclick="calculateLife()" class="mt-5 w-full rounded-xl bg-cha-leaf px-5 py-3.5 font-extrabold text-white transition hover:bg-cha-dark">জীবনের হিসাব দেখুন 🫣</button>
+        <div id="lifeResult" class="mt-4 rounded-2xl bg-cha-cream p-4 text-center text-sm leading-6">
+          চা আর সিগারেট মিলিয়ে আপনি প্রায় <b>৬৮ দিন</b> সময় কাটিয়েছেন। 🫣<br>
+          <span class="text-xs text-cha-ink/50">আনুমানিক হিসাব: প্রতি কাপ চা ১০ মিনিট, প্রতি সিগারেট ৫ মিনিট।</span>
+        </div>
+      </div>
+
+      <div class="order-1 md:order-2">
+        <p class="font-bold text-cha-leaf">একটু আত্মজিজ্ঞাসা 😶‍🌫️</p>
+        <h2 class="mt-2 text-3xl font-extrabold sm:text-4xl">চা শুধু পানীয় না।<br><span class="text-cha-orange">এটা একটা টাইমলাইন।</span></h2>
+        <p class="mt-4 leading-7 text-cha-ink/70">প্রতিটা কাপের সঙ্গে কিছু গল্প, কিছু কাজ ফাঁকি, আর “শেষ কাপ”—যেটা কখনোই শেষ কাপ হয় না।</p>
+        <div class="mt-6 rotate-1 rounded-2xl bg-cha-yellow p-5 shadow-card">
+          <p class="text-xl font-bold">“জীবন ছোট। চায়ের কাপটা বড় নিন।”</p>
+          <p class="mt-2 text-sm">— আপনার ভেতরের চা-দার্শনিক</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add a stall CTA -->
+    <section class="mx-auto max-w-7xl px-4 pb-14 sm:px-6">
+      <div class="relative overflow-hidden rounded-[2rem] bg-cha-orange px-6 py-9 text-white sm:px-10 md:flex md:items-center md:justify-between">
+        <div class="relative z-10">
+          <p class="font-bold text-white/80">আপনার এলাকার চায়ের দোকানটা কোথায়? 📍</p>
+          <h2 class="mt-1 text-2xl font-extrabold sm:text-3xl">দোকানটা যোগ করুন, আড্ডাটা জমিয়ে দিন!</h2>
+          <p class="mt-2 text-white/80">আপনার তথ্য যোগ করলে পাশের চা-প্রেমীরাও খুঁজে পাবে।</p>
+        </div>
+        <button onclick="openModal()" class="relative z-10 mt-5 whitespace-nowrap rounded-xl bg-white px-5 py-3 font-extrabold text-cha-dark transition hover:bg-cha-cream md:mt-0">
+          + দোকান যোগ করি
+        </button>
+        <span class="absolute -right-5 -top-10 text-[10rem] opacity-15">🫖</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-cha-ink/5 bg-white">
+    <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-6 text-sm text-cha-ink/60 sm:px-6 md:flex-row md:items-center md:justify-between">
+      <p><b class="text-cha-ink">ChaKoi</b> — চা খুঁজুন। আড্ডা খুঁজুন। নিজেকে খুঁজে পেলে জানাবেন।</p>
+      <p>চা হাতে বানানো, ভালোবাসায় পরিবেশন ☕</p>
+    </div>
+  </footer>
+
+  <!-- Add stall modal -->
+  <div id="stallModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-cha-ink/50 p-4" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="toast w-full max-w-lg rounded-3xl bg-cha-paper p-6 shadow-2xl sm:p-8">
+      <div class="flex items-start justify-between">
+        <div><p class="font-bold text-cha-orange">চায়ের মানচিত্রে অবদান 🌍</p><h2 id="modalTitle" class="mt-1 text-2xl font-extrabold">দোকান যোগ করুন</h2></div>
+        <button onclick="closeModal()" class="grid h-9 w-9 place-items-center rounded-full bg-cha-cream text-xl" aria-label="বন্ধ করুন">×</button>
+      </div>
+
+      <form id="stallForm" class="mt-5 space-y-4">
+        <label class="block text-sm font-bold">দোকানের নাম
+          <input name="name" required maxlength="60" placeholder="যেমন: মামার চায়ের দোকান" class="mt-1 w-full rounded-xl border border-cha-ink/10 bg-white px-4 py-3 font-normal outline-none focus:border-cha-leaf">
+        </label>
+        <label class="block text-sm font-bold">এলাকা / ঠিকানা
+          <input name="location" required maxlength="80" placeholder="যেমন: ধানমন্ডি ২৭, ঢাকা" class="mt-1 w-full rounded-xl border border-cha-ink/10 bg-white px-4 py-3 font-normal outline-none focus:border-cha-leaf">
+        </label>
+        <label class="block text-sm font-bold">চায়ের দাম (৳)
+          <input name="price" type="number" min="0" required placeholder="২০" class="mt-1 w-full rounded-xl border border-cha-ink/10 bg-white px-4 py-3 font-normal outline-none focus:border-cha-leaf">
+        </label>
+        <button class="w-full rounded-xl bg-cha-leaf px-5 py-3.5 font-extrabold text-white hover:bg-cha-dark">দোকান যোগ করি! 🫖</button>
+        <p class="text-center text-xs text-cha-ink/50">ডেমোতে তথ্য শুধু এই ব্রাউজারের সেশনেই থাকবে।</p>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-5 left-1/2 z-[60] hidden -translate-x-1/2 rounded-xl bg-cha-dark px-5 py-3 font-bold text-white shadow-xl"></div>
+
+  <script>
+    const bn = new Intl.NumberFormat('bn-BD');
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => toast.classList.add('hidden'), 2800);
+    }
+
+    function changeCups(amount) {
+      const input = document.getElementById('cups');
+      input.value = Math.max(0, Number(input.value || 0) + amount);
+      calculateExpense();
+    }
+
+    function calculateExpense() {
+      const cups = Math.max(0, Number(document.getElementById('cups').value) || 0);
+      const teaPrice = Math.max(0, Number(document.getElementById('price').value) || 0);
+      const cigarettes = Math.max(0, Number(document.getElementById('cigarettesPerDay').value) || 0);
+      const cigarettePrice = Math.max(0, Number(document.getElementById('cigarettePrice').value) || 0);
+
+      const monthlyTea = cups * teaPrice * 30;
+      const monthlyCigarettes = cigarettes * cigarettePrice * 30;
+      const monthlyTotal = monthlyTea + monthlyCigarettes;
+      const yearlyTotal = monthlyTotal * 12;
+
+      document.getElementById('expenseResult').innerHTML = `
+        <p class="text-sm text-cha-ink/60">আপনার মাসিক চা ও সিগারেটের খরচ</p>
+        <p class="mt-1 text-3xl font-extrabold text-cha-leaf">৳ ${bn.format(monthlyTotal)}</p>
+        <p class="mt-2 text-sm text-cha-ink/60">
+          চা: ৳${bn.format(monthlyTea)} · সিগারেট: ৳${bn.format(monthlyCigarettes)}
+        </p>
+        <p class="mt-1 text-sm text-cha-ink/60">
+          বছরে ৳${bn.format(yearlyTotal)}—হিসাবটা একটু ধোঁয়াটে লাগছে? 😅
+        </p>
+      `;
+    }
+
+    function calculateLife() {
+      const years = Math.max(0, Number(document.getElementById('years').value) || 0);
+      const cupsPerDay = Math.max(0, Number(document.getElementById('lifeCups').value) || 0);
+      const cigarettesPerDay = Math.max(0, Number(document.getElementById('lifeCigarettes').value) || 0);
+
+      const totalDays = years * 365.25;
+      const teaMinutes = totalDays * cupsPerDay * 10;
+      const cigaretteMinutes = totalDays * cigarettesPerDay * 5;
+      const totalMinutes = teaMinutes + cigaretteMinutes;
+
+      const days = Math.floor(totalMinutes / (60 * 24));
+      const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+      const timeSpent = days > 0
+        ? `${bn.format(days)} দিন ${bn.format(hours)} ঘণ্টা`
+        : `${bn.format(Math.floor(totalMinutes))} মিনিট`;
+
+      document.getElementById('lifeResult').innerHTML = `
+        চা আর সিগারেট মিলিয়ে আপনি প্রায় <b>${timeSpent}</b> সময় কাটিয়েছেন। 🫣<br>
+        <span class="text-xs text-cha-ink/50">
+          আনুমানিক হিসাব: প্রতি কাপ চা ১০ মিনিট, প্রতি সিগারেট ৫ মিনিট।
+        </span>
+      `;
+    }
+
+    function filterStalls() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      const cards = [...document.querySelectorAll('.stall-card')];
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const matches = card.dataset.search.toLowerCase().includes(query);
+        card.classList.toggle('hidden', !matches);
+        if (matches) visibleCount++;
+      });
+
+      document.getElementById('emptyState').classList.toggle('hidden', visibleCount > 0);
+    }
+
+    function openModal() {
+      const modal = document.getElementById('stallModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      modal.querySelector('input').focus();
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('stallModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    document.getElementById('stallForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      const name = String(form.get('name')).trim();
+      const location = String(form.get('location')).trim();
+      const price = Math.max(0, Number(form.get('price')) || 0);
+
+      const card = document.createElement('article');
+      card.className = 'stall-card overflow-hidden rounded-3xl bg-white shadow-card transition hover:-translate-y-1';
+      card.dataset.search = `${name} ${location}`;
+
+      // User-entered text is added with textContent to avoid interpreting it as HTML.
+      const illustration = document.createElement('div');
+      illustration.className = 'flex h-36 items-center justify-center bg-gradient-to-br from-cha-yellow to-cha-orange text-7xl';
+      illustration.textContent = '🫖';
+
+      const content = document.createElement('div');
+      content.className = 'p-5';
+
+      const title = document.createElement('h3');
+      title.className = 'text-xl font-extrabold';
+      title.textContent = name;
+
+      const address = document.createElement('p');
+      address.className = 'mt-1 text-sm text-cha-ink/60';
+      address.textContent = `📍 ${location}`;
+
+      const description = document.createElement('p');
+      description.className = 'mt-4 text-sm leading-6 text-cha-ink/70';
+      description.textContent = 'নতুন দোকান, নতুন আড্ডা—চা খেয়ে রিভিউ দিতে ভুলবেন না!';
+
+      const priceLine = document.createElement('div');
+      priceLine.className = 'mt-4 border-t border-cha-ink/5 pt-4 text-sm';
+      priceLine.textContent = `চা ৳${bn.format(price)} থেকে`;
+
+      content.append(title, address, description, priceLine);
+      card.append(illustration, content);
+      document.getElementById('stallGrid').prepend(card);
+
+      event.currentTarget.reset();
+      closeModal();
+      filterStalls();
+      showToast('দোকান যোগ হয়েছে—এবার চা-আড্ডা জমুক! ☕');
+    });
+
+    document.getElementById('stallModal').addEventListener('click', event => {
+      if (event.target.id === 'stallModal') closeModal();
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
