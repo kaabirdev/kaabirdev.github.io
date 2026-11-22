@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Zeriour — a courier network built for Bangladeshi commerce</title>
+  <meta name="description" content="The story, operating principles and network behind Zeriour, a fictional Bangladeshi courier brand built for a product design prototype.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a1728'/%3E%3Cpath d='M8 10h14L11 23h13' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700&family=Plus+Jakarta+Sans:wght@500;600;700;750;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/phosphor/regular/style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="about.html">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-pub-header></div>
+
+  <main id="main">
+    <section class="section-sm" style="background:var(--surface);border-bottom:1px solid var(--line);padding-top:48px">
+      <div class="container">
+        <div class="grid g-2" style="gap:40px;align-items:center" id="aboutHero">
+          <div>
+            <div class="eyebrow">About Zeriour</div>
+            <h1 style="margin-top:10px">We built the courier we kept wishing existed.</h1>
+            <p class="lead mt-4">Zeriour started with a simple observation: Bangladeshi merchants were running sophisticated online stores on top of a delivery experience held together by phone calls. We wanted the parcel to be as trustworthy as the product inside it.</p>
+            <div class="row gap-2 mt-6 wrap">
+              <a class="btn btn-primary" href="register.html">Join the network <i class="ph ph-arrow-right"></i></a>
+              <a class="btn" href="contact.html">Talk to our team</a>
+            </div>
+          </div>
+          <div class="card card-pad-lg" style="background:var(--surface-2)">
+            <div class="eyebrow" style="color:var(--faint)">At a glance</div>
+            <div class="grid g-2 mt-4" style="gap:18px">
+              <div><div class="num display" style="font-size:28px;font-weight:750">2019</div><div class="tiny muted">founded in Dhaka</div></div>
+              <div><div class="num display" style="font-size:28px;font-weight:750">8</div><div class="tiny muted">regional hubs</div></div>
+              <div><div class="num display" style="font-size:28px;font-weight:750">64</div><div class="tiny muted">districts served</div></div>
+              <div><div class="num display" style="font-size:28px;font-weight:750">320+</div><div class="tiny muted">team members</div></div>
+            </div>
+            <div class="divider" style="margin-block:18px"></div>
+            <p class="tiny muted" style="line-height:1.65"><i class="ph ph-flask"></i> Zeriour is a fictional brand created for this frontend prototype. Names, metrics and offices are illustrative.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid" style="grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,64px);align-items:start" id="aboutStory">
+          <div class="section-head">
+            <div class="eyebrow">Our story</div>
+            <h2>From one van in Motijheel to a national network.</h2>
+          </div>
+          <div class="stack gap-4">
+            <p class="small muted" style="line-height:1.75">Our first route was six merchants in Motijheel and a single van. The promise was narrow: pick up before 4 PM, scan every handover, and call the merchant the moment something went wrong. That promise is still the operating model.</p>
+            <p class="small muted" style="line-height:1.75">Today the network runs scheduled line-haul between eight hubs, with upazila routes covering all 64 districts. Same-day metro runs in Dhaka and Chattogram; remote districts are served on planned weekly routes rather than optimistic ones.</p>
+            <p class="small muted" style="line-height:1.75">We deliberately keep COD visible. Merchants can see what was collected per parcel, what fees were deducted and when the payout lands. Reconciliation shouldn’t require a spreadsheet archaeology project.</p>
+            <div class="alert info mt-2"><i class="ph ph-info"></i><div>Every figure on this site belongs to a locally seeded demo dataset. Nothing here connects to a real courier network.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="background:var(--surface);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="section-head center">
+          <div class="eyebrow">Operating principles</div>
+          <h2>How we make delivery boring.</h2>
+          <p>Reliability is an operating discipline, not a marketing adjective.</p>
+        </div>
+        <div class="grid g-4 mt-8" style="gap:16px">
+          <div class="card card-pad reveal"><span class="kpi-ico"><i class="ph ph-scan"></i></span><h4 class="mt-3" style="font-size:var(--text-md)">Scan every handover</h4><p class="tiny muted mt-2" style="line-height:1.65">If a parcel changes hands, it is scanned. The timeline is the source of truth for merchants, riders and support.</p></div>
+          <div class="card card-pad reveal" style="transition-delay:.06s"><span class="kpi-ico success"><i class="ph ph-coins"></i></span><h4 class="mt-3" style="font-size:var(--text-md)">Make money visible</h4><p class="tiny muted mt-2" style="line-height:1.65">COD collection, fees and payouts are itemised per parcel. No unexplained deductions.</p></div>
+          <div class="card card-pad reveal" style="transition-delay:.12s"><span class="kpi-ico warn"><i class="ph ph-map-trifold"></i></span><h4 class="mt-3" style="font-size:var(--text-md)">Promise honestly</h4><p class="tiny muted mt-2" style="line-height:1.65">Remote districts get realistic transit windows. We would rather quote five days than miss two.</p></div>
+          <div class="card card-pad reveal" style="transition-delay:.18s"><span class="kpi-ico violet"><i class="ph ph-handshake"></i></span><h4 class="mt-3" style="font-size:var(--text-md)">Pay riders fairly</h4><p class="tiny muted mt-2" style="line-height:1.65">Rider earnings are transparent and tied to completed tasks, not opaque incentives.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid g-2" style="gap:clamp(24px,4vw,64px)" id="aboutTimeline">
+          <div>
+            <div class="eyebrow">Milestones</div>
+            <h2 style="margin-top:10px">A network built one route at a time.</h2>
+            <p class="lead mt-3">Illustrative company history for the demo brand.</p>
+          </div>
+          <div class="timeline mt-2">
+            <div class="tl-item done"><span class="tl-dot"></span><div class="tl-body"><div class="tl-title">2019 · Motijheel pilot</div><div class="tl-desc">Six merchants, one van, same-day delivery inside Dhaka.</div></div></div>
+            <div class="tl-item done"><span class="tl-dot"></span><div class="tl-body"><div class="tl-title">2020 · COD reconciliation</div><div class="tl-desc">Weekly merchant payouts introduced with per-parcel fee visibility.</div></div></div>
+            <div class="tl-item done"><span class="tl-dot"></span><div class="tl-body"><div class="tl-title">2021 · Chattogram hub</div><div class="tl-desc">Second regional hub opens, enabling overnight Dhaka–Chattogram line-haul.</div></div></div>
+            <div class="tl-item done"><span class="tl-dot"></span><div class="tl-body"><div class="tl-title">2022 · Branch operations suite</div><div class="tl-desc">Scanning, sorting, bags and rider assignment move into one branch dashboard.</div></div></div>
+            <div class="tl-item done"><span class="tl-dot"></span><div class="tl-body"><div class="tl-title">2023 · Nationwide coverage</div><div class="tl-desc">All 64 districts served, with remote-area transit windows published openly.</div></div></div>
+            <div class="tl-item current"><span class="tl-dot"></span><div class="tl-body"><div class="tl-title">2024 · Zeriour 2.0</div><div class="tl-desc">Merchant analytics, return triage and the redesigned operations console.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="background:var(--surface);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="section-head"><div class="eyebrow">Leadership</div><h2>The people behind the network.</h2><p>Fictional profiles created for this prototype.</p></div>
+        <div class="grid g-4 mt-8" style="gap:14px">
+          <div class="card card-pad text-center"><span class="avatar xl mx-auto" style="margin-inline:auto;background:var(--navy);color:#fff">AR</span><h4 class="mt-3" style="font-size:var(--text-md)">Arif Rahman</h4><div class="tiny muted">Co-founder & CEO</div><p class="tiny faint mt-2">Former retail supply chain lead. Obsessed with cut-off times.</p></div>
+          <div class="card card-pad text-center"><span class="avatar xl tone-violet" style="margin-inline:auto">SF</span><h4 class="mt-3" style="font-size:var(--text-md)">Sadia Ferdous</h4><div class="tiny muted">Co-founder & COO</div><p class="tiny faint mt-2">Runs hub operations, rider quality and branch training.</p></div>
+          <div class="card card-pad text-center"><span class="avatar xl tone-success" style="margin-inline:auto">MH</span><h4 class="mt-3" style="font-size:var(--text-md)">Mahin Hasan</h4><div class="tiny muted">Head of Product</div><p class="tiny faint mt-2">Designs the merchant and branch tooling you see in the demo.</p></div>
+          <div class="card card-pad text-center"><span class="avatar xl tone-warn" style="margin-inline:auto">NJ</span><h4 class="mt-3" style="font-size:var(--text-md)">Nabila Jahan</h4><div class="tiny muted">Head of Finance</div><p class="tiny faint mt-2">Owns COD settlement, commission rules and payout accuracy.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid g-3" style="gap:16px">
+          <div class="card card-pad"><span class="kpi-ico"><i class="ph ph-warehouse"></i></span><h4 class="mt-3" style="font-size:var(--text-md)">Hub operations</h4><p class="tiny muted mt-2" style="line-height:1.65">Eight hubs, 480+ upazila routes, daily manifests and dedicated returns desks.</p><a class="link tiny mt-2" href="coverage.html" style="display:inline-block">Explore coverage <i class="ph ph-arrow-right"></i></a></div>
+          <div class="card card-pad"><span class="kpi-ico success"><i class="ph ph-moped"></i></span><h4 class="mt-3" style="font-size:var(--text-md)">Rider network</h4><p class="tiny muted mt-2" style="line-height:1.65">Trained delivery agents with zone assignments, COD handling and app-based proof.</p><a class="link tiny mt-2" href="login.html?role=rider" style="display:inline-block">See the rider app <i class="ph ph-arrow-right"></i></a></div>
+          <div class="card card-pad"><span class="kpi-ico violet"><i class="ph ph-code"></i></span><h4 class="mt-3" style="font-size:var(--text-md)">Merchant platform</h4><p class="tiny muted mt-2" style="line-height:1.65">Bulk import, labels, wallet, API keys and analytics — all demo-ready.</p><a class="link tiny mt-2" href="login.html?role=merchant" style="display:inline-block">Open merchant demo <i class="ph ph-arrow-right"></i></a></div>
+        </div>
+        <div class="cta-band mt-8">
+          <div><h2>Build your next delivery on Zeriour.</h2><p>Merchant onboarding is free, and the demo account is ready the moment you are.</p></div>
+          <div class="row gap-2 wrap"><a class="btn btn-primary btn-lg" href="register.html">Create merchant account</a><a class="btn btn-ghost btn-lg" href="contact.html">Contact sales</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-pub-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/vendor/chart.umd.min.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/tracking.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/public.js"></script>
+  <script src="js/pages.js"></script>
+</body>
+</html>

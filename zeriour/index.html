@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeriour — Nationwide courier & COD logistics for Bangladesh</title>
+  <meta name="description" content="Zeriour is a fictional Bangladeshi courier platform: nationwide delivery, same-day metro dispatch, transparent COD settlement and parcel tracking. A frontend prototype.">
+  <meta name="theme-color" content="#0a1728">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a1728'/%3E%3Cpath d='M8 10h14L11 23h13' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700&family=Plus+Jakarta+Sans:wght@500;600;700;750;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/phosphor/regular/style.css">
+  <link rel="stylesheet" href="assets/vendor/phosphor/fill/style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="index.html">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-pub-header></div>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid-bg" aria-hidden="true"></div>
+      <div class="container" style="position:relative;z-index:1">
+        <div class="hero-grid">
+          <div class="anim-fade-up">
+            <span class="hero-badge"><span class="tag">New</span> Same-day metro dispatch until 11:00 AM <i class="ph ph-arrow-right"></i></span>
+            <h1 class="mt-4">Every parcel, delivered with proof.</h1>
+            <p class="lead">Zeriour gives Bangladeshi merchants one calm place to ship, track and settle COD — from Dhaka same-day runs to the last mile in Kurigram.</p>
+            <div class="hero-cta">
+              <a class="btn btn-primary btn-lg" href="register.html">Start shipping free <i class="ph ph-arrow-right"></i></a>
+              <a class="btn btn-lg" href="#track"><i class="ph ph-package"></i> Track a parcel</a>
+            </div>
+            <div class="hero-trust">
+              <div class="metric"><div class="v num" data-count="98.2" data-decimals="1" data-suffix="%">98.2%</div><div class="l">on-time delivery</div></div>
+              <span class="vr"></span>
+              <div class="metric"><div class="v num" data-count="64" data-suffix="">64</div><div class="l">districts covered</div></div>
+              <span class="vr"></span>
+              <div class="metric"><div class="v num" data-count="3.4" data-decimals="1" data-suffix="M">3.4M</div><div class="l">parcels moved</div></div>
+              <span class="vr"></span>
+              <div class="metric"><div class="v num">24h</div><div class="l">merchant activation</div></div>
+            </div>
+          </div>
+
+          <div class="hero-visual anim-fade-up" style="animation-delay:.12s">
+            <div class="hero-card">
+              <div class="hero-card-head">
+                <div class="row gap-2">
+                  <span class="kpi-ico"><i class="ph ph-package"></i></span>
+                  <div>
+                    <div style="font-size:var(--text-xs);font-weight:650">Shipment ZR4829103893</div>
+                    <div class="tiny faint">Updated 4 minutes ago</div>
+                  </div>
+                </div>
+                <span class="badge badge-progress"><i class="dot"></i>In transit</span>
+              </div>
+              <div class="hero-route">
+                <div class="hero-stop"><span class="st">Origin</span><span class="nm">Dhaka</span></div>
+                <div class="route-line"><span class="truck"><i class="ph ph-truck"></i></span></div>
+                <div class="hero-stop" style="text-align:right"><span class="st">Destination</span><span class="nm">Chattogram</span></div>
+              </div>
+              <div class="hero-progress">
+                <div class="between tiny muted mb-1"><span>Line-haul · 214 km</span><span>Arriving tomorrow</span></div>
+                <div class="progress"><span style="width:68%"></span></div>
+              </div>
+              <div class="hero-meta-grid">
+                <div class="hero-meta"><div class="k">Merchant</div><div class="v">Nokshi Kuthir</div></div>
+                <div class="hero-meta"><div class="k">COD amount</div><div class="v num">৳2,450</div></div>
+                <div class="hero-meta"><div class="k">Service</div><div class="v">Express · 1.2 kg</div></div>
+                <div class="hero-meta"><div class="k">Rider</div><div class="v">Assigned at hub</div></div>
+              </div>
+            </div>
+            <div class="hero-float hf-1">
+              <span class="ico"><i class="ph ph-check"></i></span>
+              <div><div class="t">Picked up · 09:42</div><div class="s">Motijheel Hub · DHK-01</div></div>
+            </div>
+            <div class="hero-float hf-2">
+              <span class="ico" style="background:var(--primary-50);color:var(--primary)"><i class="ph ph-wallet"></i></span>
+              <div><div class="t">COD settled · ৳18,420</div><div class="s">Weekly payout · Tuesday</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRACK STRIP -->
+    <section class="section-sm" id="track" style="padding-top:0">
+      <div class="container" style="margin-top:-38px;position:relative;z-index:2">
+        <div class="grid" style="grid-template-columns:1fr 1.6fr;gap:20px;align-items:center" id="trackStrip">
+          <div>
+            <div class="eyebrow">Live tracking</div>
+            <h2 style="font-size:var(--text-2xl);margin-top:6px">Where’s my parcel?</h2>
+            <p class="small muted mt-2">One number. Every hub movement, rider handover and delivery attempt.</p>
+          </div>
+          <div data-track-widget></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS BAND -->
+    <section class="section-sm" style="padding-top:8px">
+      <div class="container">
+        <div class="stat-band reveal">
+          <div class="grid g-4" data-facts style="gap:24px"></div>
+          <div class="between mt-8 wrap gap-3" style="position:relative;border-top:1px solid rgba(255,255,255,.1);padding-top:18px">
+            <p class="tiny" style="color:#9fb0c4;max-width:56ch">Performance figures are illustrative demo metrics built into this prototype. No live courier network is connected.</p>
+            <a class="link tiny" style="color:#8fb4ff" href="about.html">How we operate <i class="ph ph-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="between wrap gap-4 mb-8">
+          <div class="section-head reveal">
+            <div class="eyebrow">Delivery services</div>
+            <h2>Built for how Bangladesh actually ships.</h2>
+            <p>Three speeds, one operating standard. Choose the service your customer expects — we handle the handovers, scans and cash.</p>
+          </div>
+          <a class="btn reveal" href="services.html">Compare services <i class="ph ph-arrow-right"></i></a>
+        </div>
+        <div class="grid g-3 feature-grid" style="gap:16px">
+          <a class="card card-hover feature-card reveal" href="services.html">
+            <span class="feature-ico"><i class="ph ph-package"></i></span>
+            <h4>Standard nationwide</h4>
+            <p>Reliable 2–4 day delivery through eight regional hubs and 480+ upazila routes, with attempt tracking at every step.</p>
+            <span class="more">From ৳60 · See rates <i class="ph ph-arrow-right"></i></span>
+          </a>
+          <a class="card card-hover feature-card reveal" href="services.html" style="transition-delay:.06s">
+            <span class="feature-ico"><i class="ph ph-lightning"></i></span>
+            <h4>Express next-day</h4>
+            <p>Priority sortation and dedicated line-haul to major cities. Your parcel is on a truck the same evening it’s picked up.</p>
+            <span class="more">From ৳96 · See rates <i class="ph ph-arrow-right"></i></span>
+          </a>
+          <a class="card card-hover feature-card reveal" href="services.html" style="transition-delay:.12s">
+            <span class="feature-ico"><i class="ph ph-timer"></i></span>
+            <h4>Same-day metro</h4>
+            <p>Dhaka and Chattogram city-to-city in 6–12 hours. Order before 11:00 AM and it moves on the midday manifest.</p>
+            <span class="more">From ৳144 · See rates <i class="ph ph-arrow-right"></i></span>
+          </a>
+          <a class="card card-hover feature-card reveal" href="services.html">
+            <span class="feature-ico"><i class="ph ph-wallet"></i></span>
+            <h4>COD collection</h4>
+            <p>Cash collected at the doorstep, reconciled the same day, and paid into your Zeriour wallet with a weekly settlement.</p>
+            <span class="more">1.2% fee · Learn more <i class="ph ph-arrow-right"></i></span>
+          </a>
+          <a class="card card-hover feature-card reveal" href="services.html" style="transition-delay:.06s">
+            <span class="feature-ico"><i class="ph ph-arrows-left-right"></i></span>
+            <h4>Returns & re-dispatch</h4>
+            <p>Failed delivery? Triage reasons, reschedule a second attempt or move the parcel into a clean return flow.</p>
+            <span class="more">Return handling <i class="ph ph-arrow-right"></i></span>
+          </a>
+          <a class="card card-hover feature-card reveal" href="services.html" style="transition-delay:.12s">
+            <span class="feature-ico"><i class="ph ph-sliders-horizontal"></i></span>
+            <h4>Merchant tooling</h4>
+            <p>Bulk CSV import, printable labels, invoices, API credentials and webhooks — all visible in the demo dashboard.</p>
+            <span class="more">Explore the suite <i class="ph ph-arrow-right"></i></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" style="background:var(--surface);border-block:1px solid var(--line)" id="how">
+      <div class="container">
+        <div class="section-head center reveal">
+          <div class="eyebrow">How it works</div>
+          <h2>From order to doorstep in four moves.</h2>
+          <p>No spreadsheets, no phone-chain guesswork. Every handover is scanned and visible to you and your customer.</p>
+        </div>
+        <div class="grid g-4 mt-8" style="gap:20px">
+          <div class="how-step reveal"><span class="how-num">01</span><span class="how-line"></span>
+            <h4>Create your account</h4>
+            <p>Sign up in minutes with your business and pickup details. Demo accounts are ready immediately.</p>
+          </div>
+          <div class="how-step reveal" style="transition-delay:.06s"><span class="how-num">02</span><span class="how-line"></span>
+            <h4>Add parcels</h4>
+            <p>Enter one parcel, many at once, or import a CSV. Charges and COD fees are calculated before you submit.</p>
+          </div>
+          <div class="how-step reveal" style="transition-delay:.12s"><span class="how-num">03</span><span class="how-line"></span>
+            <h4>We pick up & sort</h4>
+            <p>A rider collects from your address. Hubs scan, bag and dispatch on the next available manifest.</p>
+          </div>
+          <div class="how-step reveal" style="transition-delay:.18s"><span class="how-num">04</span>
+            <h4>Delivered, COD settled</h4>
+            <p>The rider closes the task, your customer gets proof of delivery, and your wallet is credited.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COVERAGE -->
+    <section class="section">
+      <div class="container">
+        <div class="coverage-wrap">
+          <div class="reveal">
+            <div class="section-head">
+              <div class="eyebrow">Nationwide reach</div>
+              <h2>Eight hubs. Sixty-four districts.</h2>
+              <p>Our network runs daily line-haul between regional hubs, then hands off to upazila routes. Remote districts are clearly marked with expected transit times.</p>
+            </div>
+            <div class="card mt-6">
+              <div class="card-head"><div><h3><i class="ph ph-map-trifold"></i> Divisions we serve</h3><p class="sub">Daily dispatch from every hub</p></div><a class="link tiny" href="coverage.html">Full coverage map <i class="ph ph-arrow-right"></i></a></div>
+              <div class="card-body" data-home-coverage style="padding:10px"></div>
+            </div>
+          </div>
+          <div class="reveal" style="transition-delay:.08s">
+            <div class="card card-pad-lg" style="background:var(--surface-2)">
+              <div class="eyebrow" style="color:var(--faint)">Delivery performance</div>
+              <div class="stack gap-5 mt-4">
+                <div>
+                  <div class="between mb-2"><span class="small strong">On-time delivery</span><span class="small num strong">98.2%</span></div>
+                  <div class="progress success"><span style="width:98.2%"></span></div>
+                </div>
+                <div>
+                  <div class="between mb-2"><span class="small strong">First-attempt success</span><span class="small num strong">94.6%</span></div>
+                  <div class="progress"><span style="width:94.6%"></span></div>
+                </div>
+                <div>
+                  <div class="between mb-2"><span class="small strong">COD settlement accuracy</span><span class="small num strong">99.9%</span></div>
+                  <div class="progress success"><span style="width:99.9%"></span></div>
+                </div>
+                <div>
+                  <div class="between mb-2"><span class="small strong">Same-day metro fulfilment</span><span class="small num strong">91.4%</span></div>
+                  <div class="progress warn"><span style="width:91.4%"></span></div>
+                </div>
+              </div>
+              <div class="divider my-4" style="margin-block:18px"></div>
+              <div class="grid g-2" style="gap:12px">
+                <div class="hero-meta"><div class="k">Avg. pickup time</div><div class="v num">4h 20m</div></div>
+                <div class="hero-meta"><div class="k">Parcels per day</div><div class="v num">12,400+</div></div>
+              </div>
+              <p class="tiny faint mt-4"><i class="ph ph-flask"></i> Demo metrics — not a live service guarantee.</p>
+              <div data-live-metrics class="mt-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING CALCULATOR -->
+    <section class="section" style="background:var(--surface);border-block:1px solid var(--line)" id="pricing">
+      <div class="container">
+        <div class="section-head center reveal">
+          <div class="eyebrow">Transparent pricing</div>
+          <h2>Know the charge before you ship.</h2>
+          <p>Base rate, weight, remote surcharge and COD fee — itemised. This calculator uses the same configuration the admin dashboard controls.</p>
+        </div>
+        <div class="mt-8 reveal" data-calculator-host></div>
+        <div class="row gap-4 center mt-5 wrap tiny muted">
+          <span><i class="ph ph-check"></i> No monthly fee</span>
+          <span><i class="ph ph-check"></i> Weekly COD payout</span>
+          <span><i class="ph ph-check"></i> Free merchant onboarding</span>
+          <a class="link" href="pricing.html">Full rate card <i class="ph ph-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MERCHANT BENEFITS -->
+    <section class="section">
+      <div class="container">
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:center" id="benefits">
+          <div class="reveal">
+            <div class="eyebrow">For merchants</div>
+            <h2 style="margin-top:10px">Less operations. More orders.</h2>
+            <p class="lead mt-4">Everything a growing store needs to run delivery without hiring a logistics team.</p>
+            <div class="stack gap-4 mt-6">
+              <div class="row gap-3"><span class="kpi-ico success"><i class="ph ph-upload-simple"></i></span><div><div class="strong small">Bulk CSV import & export</div><div class="tiny muted">Upload hundreds of orders, fix rows inline, export filtered reports.</div></div></div>
+              <div class="row gap-3"><span class="kpi-ico"><i class="ph ph-printer"></i></span><div><div class="strong small">Labels, invoices & manifests</div><div class="tiny muted">Print-ready documents generated for every parcel and consignment.</div></div></div>
+              <div class="row gap-3"><span class="kpi-ico violet"><i class="ph ph-code"></i></span><div><div class="strong small">API & webhooks (simulated)</div><div class="tiny muted">Demo keys and event subscriptions are wired into the admin panel.</div></div></div>
+              <div class="row gap-3"><span class="kpi-ico sky"><i class="ph ph-chart-line-up"></i></span><div><div class="strong small">Analytics that answer questions</div><div class="tiny muted">Success rate, returns, district performance and COD trends.</div></div></div>
+            </div>
+            <a class="btn btn-primary mt-6" href="register.html">Open a merchant account <i class="ph ph-arrow-right"></i></a>
+          </div>
+          <div class="reveal" style="transition-delay:.1s">
+            <div class="card" style="box-shadow:var(--shadow-lg)">
+              <div class="card-head">
+                <div><h3><i class="ph ph-wallet"></i> COD wallet</h3><p class="sub">Nokshi Kuthir · demo merchant</p></div>
+                <span class="badge badge-success"><i class="dot"></i>Active</span>
+              </div>
+              <div class="card-body">
+                <div class="tiny muted" style="text-transform:uppercase;letter-spacing:.07em;font-weight:650">Available balance</div>
+                <div class="num" style="font-family:var(--font-display);font-weight:750;font-size:2.1rem;letter-spacing:-.04em;margin-top:4px">৳48,250</div>
+                <div class="row gap-2 mt-2"><span class="badge badge-warn">Pending ৳12,400</span><span class="badge badge-neutral">Next payout Tue</span></div>
+                <div class="divider" style="margin-block:18px"></div>
+                <div class="summary-line"><span>Delivered this week</span><strong class="num">186 parcels</strong></div>
+                <div class="summary-line"><span>COD collected</span><strong class="num">৳218,600</strong></div>
+                <div class="summary-line"><span>Delivery fees</span><strong class="num">−৳12,740</strong></div>
+                <div class="summary-total summary-line"><span>Net settlement</span><strong class="num">৳205,860</strong></div>
+                <div class="alert success mt-4"><i class="ph ph-check-circle"></i><div><strong>Settled on time</strong><br>Last 12 payouts completed without a mismatch.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section" style="background:var(--surface);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="section-head center reveal">
+          <div class="eyebrow">Merchant stories</div>
+          <h2>Trusted behind the scenes.</h2>
+          <p>Small shops and scaling brands use Zeriour to keep delivery predictable.</p>
+        </div>
+        <div class="grid g-3 mt-8" style="gap:16px">
+          <div class="card quote-card reveal">
+            <div class="stars" aria-label="5 out of 5"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+            <p class="q">Our return rate dropped from 11% to 4% in two months. Being able to see the failed-attempt reason per parcel changed how we confirm orders.</p>
+            <div class="quote-who"><span class="avatar tone-violet">NJ</span><div><div class="nm">Nusrat Jahan</div><div class="rl">Founder · Nokshi Kuthir</div></div></div>
+          </div>
+          <div class="card quote-card reveal" style="transition-delay:.06s">
+            <div class="stars" aria-label="5 out of 5"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+            <p class="q">We ship 300+ electronics orders a week. The bulk CSV flow and weekly COD settlement are the two things we can’t work without now.</p>
+            <div class="quote-who"><span class="avatar tone-success">FA</span><div><div class="nm">Farhan Ahmed</div><div class="rl">Operations · TechNest BD</div></div></div>
+          </div>
+          <div class="card quote-card reveal" style="transition-delay:.12s">
+            <div class="stars" aria-label="5 out of 5"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+            <p class="q">Same-day metro lets us promise delivery on products we used to sell as pre-orders. Our Chattogram customers notice the difference.</p>
+            <div class="quote-who"><span class="avatar tone-warn">SJ</span><div><div class="nm">Sharmin Sultana</div><div class="rl">Owner · Bela Beauty</div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="grid" style="grid-template-columns:.85fr 1.15fr;gap:clamp(24px,4vw,64px);align-items:start" id="faqGrid">
+          <div class="reveal" style="position:sticky;top:96px">
+            <div class="eyebrow">Questions</div>
+            <h2 style="margin-top:10px">Answers before you ask.</h2>
+            <p class="lead mt-3">Still deciding? Talk to a human — our support team knows the network street by street.</p>
+            <div class="stack gap-2 mt-5">
+              <a class="btn btn-outline-primary" href="contact.html"><i class="ph ph-headset"></i> Contact support</a>
+              <a class="btn btn-ghost" href="pricing.html#faq">Read all FAQs <i class="ph ph-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="accordion reveal" data-faq></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section-sm">
+      <div class="container">
+        <div class="card card-pad-lg reveal" style="border-color:var(--line-strong)">
+          <div class="grid g-3" style="gap:24px">
+            <div>
+              <div class="eyebrow">Talk to us</div>
+              <h3 style="margin-top:8px;font-size:var(--text-xl)">Real people, not a ticket queue.</h3>
+              <p class="tiny muted mt-2">Sales support for merchants, delivery help for customers — Saturday to Thursday.</p>
+            </div>
+            <div class="stack gap-3">
+              <a class="row gap-3" href="tel:+8809612300400"><span class="kpi-ico"><i class="ph ph-phone"></i></span><span><span class="small strong" style="display:block">09612 300 400</span><span class="tiny muted">Hotline · 9am – 9pm</span></span></a>
+              <a class="row gap-3" href="mailto:support@zeriour.demo"><span class="kpi-ico sky"><i class="ph ph-envelope-simple"></i></span><span><span class="small strong" style="display:block">support@zeriour.demo</span><span class="tiny muted">Replies within 24 hours</span></span></a>
+            </div>
+            <div class="stack gap-3">
+              <a class="row gap-3" href="contact.html"><span class="kpi-ico violet"><i class="ph ph-map-pin"></i></span><span><span class="small strong" style="display:block">Gulshan Avenue, Dhaka</span><span class="tiny muted">Head office · 1212</span></span></a>
+              <a class="row gap-3" href="login.html"><span class="kpi-ico success"><i class="ph ph-storefront"></i></span><span><span class="small strong" style="display:block">Merchant portal</span><span class="tiny muted">Sign in or try a demo role</span></span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div style="position:relative;z-index:1">
+            <div class="eyebrow" style="color:#8fb4ff">Get started</div>
+            <h2 style="margin-top:8px">Your next 100 deliveries deserve a better network.</h2>
+            <p>Create a merchant account, ship your first parcel, and see every status change in one place.</p>
+          </div>
+          <div class="row gap-2 wrap" style="position:relative;z-index:1">
+            <a class="btn btn-primary btn-lg" href="register.html">Create account <i class="ph ph-arrow-right"></i></a>
+            <a class="btn btn-ghost btn-lg" href="login.html">Explore demo <i class="ph ph-arrow-up-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-pub-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/vendor/chart.umd.min.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/tracking.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/public.js"></script>
+  <script src="js/pages.js"></script>
+</body>
+</html>

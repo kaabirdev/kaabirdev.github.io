@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing & delivery calculator · Zeriour</title>
+  <meta name="description" content="Transparent Zeriour delivery pricing: base rates, weight charges, remote surcharges and COD fees. Try the live demo calculator.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a1728'/%3E%3Cpath d='M8 10h14L11 23h13' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700&family=Plus+Jakarta+Sans:wght@500;600;700;750;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/phosphor/regular/style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="pricing.html">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-pub-header></div>
+
+  <main id="main">
+    <section class="section-sm" style="background:var(--surface);border-bottom:1px solid var(--line);padding-top:48px">
+      <div class="container">
+        <div class="grid g-2" style="gap:32px;align-items:end" id="pricingHero">
+          <div>
+            <div class="eyebrow">Pricing</div>
+            <h1 style="margin-top:10px">One rate card. No surprise deductions.</h1>
+            <p class="lead mt-4">Base rate, weight above the first kilogram, remote surcharge and COD fee — each shown separately, before you ship.</p>
+          </div>
+          <div class="row gap-3 wrap" style="justify-content:flex-end">
+            <div class="card card-pad" style="min-width:150px"><div class="tiny muted">Base rate from</div><div class="num" style="font-family:var(--font-display);font-weight:750;font-size:24px;letter-spacing:-.03em">৳60</div><div class="tiny faint">first 1 kg</div></div>
+            <div class="card card-pad" style="min-width:150px"><div class="tiny muted">COD fee</div><div class="num" style="font-family:var(--font-display);font-weight:750;font-size:24px;letter-spacing:-.03em">1.2%</div><div class="tiny faint">minimum ৳10</div></div>
+            <div class="card card-pad" style="min-width:150px"><div class="tiny muted">Extra weight</div><div class="num" style="font-family:var(--font-display);font-weight:750;font-size:24px;letter-spacing:-.03em">৳20</div><div class="tiny faint">per extra kg</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head center reveal">
+          <div class="eyebrow">Calculator</div>
+          <h2>Estimate a delivery now.</h2>
+          <p>This is the same pricing engine used by the merchant parcel form and controlled from the admin dashboard.</p>
+        </div>
+        <div class="mt-8 reveal" data-calculator-host></div>
+      </div>
+    </section>
+
+    <section class="section" style="background:var(--surface);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="between wrap gap-4 mb-6">
+          <div class="section-head"><div class="eyebrow">Rate card</div><h2>Base delivery charges.</h2><p>For a 1 kg parcel from Dhaka. Add the extra-weight rate for heavier parcels.</p></div>
+          <span class="badge badge-neutral"><i class="ph ph-flask"></i> Demo configuration</span>
+        </div>
+        <div class="card" data-pricing-matrix></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid g-3" style="gap:16px">
+          <div class="card card-pad reveal">
+            <span class="kpi-ico"><i class="ph ph-scales"></i></span>
+            <h4 class="mt-3" style="font-size:var(--text-md)">Weight & dimensions</h4>
+            <p class="tiny muted mt-2" style="line-height:1.6">Charges are based on actual or volumetric weight, whichever is higher. The first kilogram is included in the base rate; each additional kilogram adds ৳20.</p>
+          </div>
+          <div class="card card-pad reveal" style="transition-delay:.06s">
+            <span class="kpi-ico warn"><i class="ph ph-map-trifold"></i></span>
+            <h4 class="mt-3" style="font-size:var(--text-md)">Remote districts</h4>
+            <p class="tiny muted mt-2" style="line-height:1.6">Bandarban, Rangamati, Khagrachhari, Panchagarh, Kurigram, Barguna, Bhola, Patuakhali and Sunamganj carry a ৳35 routing surcharge.</p>
+          </div>
+          <div class="card card-pad reveal" style="transition-delay:.12s">
+            <span class="kpi-ico success"><i class="ph ph-wallet"></i></span>
+            <h4 class="mt-3" style="font-size:var(--text-md)">COD fee</h4>
+            <p class="tiny muted mt-2" style="line-height:1.6">A 1.2% collection fee applies to cash-on-delivery orders, with a ৳10 minimum. Non-COD parcels have no collection fee.</p>
+          </div>
+        </div>
+
+        <div class="card mt-6 reveal">
+          <div class="card-head"><div><h3><i class="ph ph-receipt"></i> Worked example</h3><p class="sub">Express · 2.5 kg · Dhaka → Sylhet · COD ৳3,000</p></div><span class="badge badge-neutral">Illustrative</span></div>
+          <div class="card-body">
+            <div class="kv-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+              <div class="kv"><div class="k">Base (express)</div><div class="v num">৳96</div></div>
+              <div class="kv"><div class="k">Extra weight (2 kg)</div><div class="v num">৳40</div></div>
+              <div class="kv"><div class="k">Remote surcharge</div><div class="v num">৳0</div></div>
+              <div class="kv"><div class="k">COD fee (1.2%)</div><div class="v num">৳36</div></div>
+              <div class="kv"><div class="k">Total payable</div><div class="v num" style="color:var(--primary);font-weight:700">৳172</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq" style="background:var(--surface);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="grid" style="grid-template-columns:.8fr 1.2fr;gap:clamp(24px,4vw,64px);align-items:start" id="faqGrid">
+          <div class="reveal" style="position:sticky;top:96px">
+            <div class="eyebrow">FAQ</div>
+            <h2 style="margin-top:10px">Pricing questions.</h2>
+            <p class="lead mt-3">If something still isn’t clear, support can walk through a real quote with you.</p>
+            <a class="btn btn-outline-primary mt-5" href="contact.html"><i class="ph ph-headset"></i> Ask about rates</a>
+          </div>
+          <div class="accordion reveal" data-faq></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div><h2>Ready to move your first parcel?</h2><p>Merchant accounts are free in the demo. Add a parcel and the calculator becomes the actual charge.</p></div>
+          <div class="row gap-2 wrap"><a class="btn btn-primary btn-lg" href="register.html">Create account</a><a class="btn btn-ghost btn-lg" href="track.html">Track a parcel</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-pub-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/vendor/chart.umd.min.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/tracking.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/public.js"></script>
+  <script src="js/pages.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track a parcel · Zeriour</title>
+  <meta name="description" content="Track your Zeriour shipment in real time. Enter a tracking number to see hub scans, rider assignment and delivery status.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a1728'/%3E%3Cpath d='M8 10h14L11 23h13' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700&family=Plus+Jakarta+Sans:wght@500;600;700;750;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/phosphor/regular/style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="track.html">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-pub-header></div>
+
+  <main id="main">
+    <section class="section-sm" style="background:var(--surface);border-bottom:1px solid var(--line);padding-top:40px;padding-bottom:40px">
+      <div class="container">
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:32px;align-items:center" id="trackHero">
+          <div>
+            <div class="eyebrow">Tracking</div>
+            <h1 style="margin-top:10px">Know where it is, right now.</h1>
+            <p class="lead mt-3">Every hub scan, rider handover and delivery attempt appears on one timeline. No login needed.</p>
+          </div>
+          <form class="track-widget" data-track-form role="search" style="box-shadow:var(--shadow-md)">
+            <div class="tw-inner">
+              <label class="sr-only" for="trackPageInput">Tracking number</label>
+              <input class="tw-input mono" id="trackPageInput" name="tracking" type="text" placeholder="e.g. ZR4829103756" autocomplete="off" spellcheck="false">
+              <button class="btn btn-primary" type="submit"><i class="ph ph-magnifying-glass"></i> Track parcel</button>
+            </div>
+            <div class="tw-hint"><i class="ph ph-flask"></i> Try a demo ID:
+              <button type="button" onclick="document.getElementById('trackPageInput').value='ZR4829103756'">ZR4829103756</button>
+              <button type="button" onclick="document.getElementById('trackPageInput').value='ZR4829103893'">ZR4829103893</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-sm" data-track-result>
+      <div class="container" data-track-root>
+        <div class="card card-pad-lg"><div class="skeleton sk-line" style="width:26%"></div><div class="skeleton mt-3" style="width:44%;height:26px"></div><div class="skeleton mt-4" style="height:56px"></div></div>
+      </div>
+    </section>
+
+    <section class="section-sm" style="padding-top:0">
+      <div class="container">
+        <div class="grid g-3" style="gap:16px">
+          <div class="card">
+            <div class="card-head" style="padding:14px 16px"><div><h4 style="font-size:var(--text-sm)"><i class="ph ph-flask"></i> Demo shipments</h4><p class="sub">Open a seeded parcel</p></div></div>
+            <div class="card-body" style="padding:10px;display:flex;flex-direction:column;gap:6px" data-track-demos></div>
+          </div>
+          <div class="card card-pad">
+            <span class="kpi-ico"><i class="ph ph-path"></i></span>
+            <h4 class="mt-3" style="font-size:var(--text-md)">How the timeline works</h4>
+            <p class="tiny muted mt-2" style="line-height:1.65">Each parcel gets a status event whenever it is scanned — at pickup, origin hub, line-haul, destination hub, rider assignment and delivery. Failed attempts include the recorded reason.</p>
+            <a class="link tiny mt-3" href="services.html" style="display:inline-block">See the delivery process <i class="ph ph-arrow-right"></i></a>
+          </div>
+          <div class="card card-pad">
+            <span class="kpi-ico warn"><i class="ph ph-headset"></i></span>
+            <h4 class="mt-3" style="font-size:var(--text-md)">Parcel not moving?</h4>
+            <p class="tiny muted mt-2" style="line-height:1.65">If a shipment hasn’t updated in 48 hours, our support team can trace it across hubs and contact the destination branch directly.</p>
+            <a class="btn btn-sm btn-outline-primary mt-3" href="contact.html">Contact support</a>
+          </div>
+        </div>
+        <p class="tiny faint mt-6" style="text-align:center"><i class="ph ph-info"></i> Tracking data is simulated locally for this prototype. Seeded parcels update when you process them in the branch, rider or admin demo dashboards.</p>
+      </div>
+    </section>
+  </main>
+
+  <div data-pub-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/vendor/chart.umd.min.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/tracking.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/public.js"></script>
+  <script src="js/pages.js"></script>
+</body>
+</html>

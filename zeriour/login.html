@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in · Zeriour demo</title>
+  <meta name="description" content="Sign in to the Zeriour demo courier platform with a merchant, admin, branch or rider account.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a1728'/%3E%3Cpath d='M8 10h14L11 23h13' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700&family=Plus+Jakarta+Sans:wght@500;600;700;750;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/phosphor/regular/style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="login">
+  <a class="skip-link" href="#authForm">Skip to sign-in form</a>
+  <div class="auth-wrap">
+    <aside class="auth-side">
+      <a class="brand" href="index.html" aria-label="Zeriour home">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 6.5h11.5L7.5 17.5H19" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15.5 6.5 19 6.5 19 10" stroke="#22d3ee" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span><span class="brand-name">zeriour<span>.</span></span><span class="brand-tag">Precision logistics</span></span>
+      </a>
+
+      <div style="margin:auto 0;max-width:520px;position:relative;z-index:1">
+        <div class="eyebrow" style="color:#7fb0ff">Demo workspace</div>
+        <p class="auth-quote mt-4">Four roles. One shared shipment network. Sign in and watch a parcel move from checkout to doorstep.</p>
+        <div class="grid g-2 mt-8" style="gap:12px;max-width:420px">
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:14px">
+            <div style="font-family:var(--font-display);font-weight:750;font-size:22px;letter-spacing:-.03em">78</div>
+            <div class="tiny" style="color:#93a7c0">seeded demo parcels</div>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:14px">
+            <div style="font-family:var(--font-display);font-weight:750;font-size:22px;letter-spacing:-.03em">12</div>
+            <div class="tiny" style="color:#93a7c0">merchant stores</div>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:14px">
+            <div style="font-family:var(--font-display);font-weight:750;font-size:22px;letter-spacing:-.03em">8</div>
+            <div class="tiny" style="color:#93a7c0">regional hubs</div>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:14px">
+            <div style="font-family:var(--font-display);font-weight:750;font-size:22px;letter-spacing:-.03em">10</div>
+            <div class="tiny" style="color:#93a7c0">delivery riders</div>
+          </div>
+        </div>
+        <div class="row gap-2 mt-8 tiny" style="color:#93a7c0;max-width:400px;line-height:1.6">
+          <i class="ph ph-flask" style="font-size:16px;flex:0 0 auto;margin-top:2px"></i>
+          <span>This is a frontend prototype. Authentication is simulated with localStorage and is not secure for production use.</span>
+        </div>
+      </div>
+
+      <div class="row gap-3" style="position:relative;z-index:1;color:#8ea3bd;font-size:11px;flex-wrap:wrap">
+        <span>© <span data-year>2024</span> Zeriour Logistics</span>
+        <span>·</span>
+        <a href="index.html" style="color:#c6d8ef">Public site</a>
+        <span>·</span>
+        <a href="track.html" style="color:#c6d8ef">Track a parcel</a>
+      </div>
+    </aside>
+
+    <main class="auth-panel" id="authForm">
+      <div class="auth-form">
+        <a class="row gap-2 tiny muted mb-6" href="index.html" style="display:inline-flex"><i class="ph ph-arrow-left"></i> Back to website</a>
+        <div data-session-banner hidden></div>
+        <h1>Welcome back</h1>
+        <p class="lead" style="font-size:var(--text-sm);margin-top:8px">Pick a demo role or sign in with the credentials below. Everything is local to this browser.</p>
+
+        <div class="mt-5" data-login-error></div>
+
+        <div class="mt-5">
+          <div class="label mb-2">Demo role</div>
+          <div class="auth-roles" data-role-picker></div>
+        </div>
+
+        <div class="row gap-3 my-5" style="margin-block:20px">
+          <span class="grow" style="height:1px;background:var(--line)"></span>
+          <span class="tiny faint">or sign in manually</span>
+          <span class="grow" style="height:1px;background:var(--line)"></span>
+        </div>
+
+        <form data-login-form novalidate>
+          <div class="field">
+            <label class="label" for="loginEmail">Email address</label>
+            <div class="input-icon">
+              <i class="ph ph-envelope-simple"></i>
+              <input class="input" id="loginEmail" name="email" type="email" placeholder="you@business.com" autocomplete="username" aria-describedby="emailHint">
+            </div>
+            <span class="error-text" hidden></span>
+          </div>
+          <div class="field mt-4">
+            <div class="between">
+              <label class="label" for="loginPassword">Password</label>
+              <a class="link tiny" href="forgot-password.html">Forgot password?</a>
+            </div>
+            <div class="input-icon">
+              <i class="ph ph-lock-simple"></i>
+              <input class="input" id="loginPassword" name="password" type="password" placeholder="••••••" autocomplete="current-password" style="padding-right:42px">
+              <button type="button" class="icon-btn sm trailing" data-toggle-password aria-label="Show password"><i class="ph ph-eye"></i></button>
+            </div>
+            <span class="error-text" hidden></span>
+          </div>
+          <div class="between mt-4">
+            <label class="checkbox"><input type="checkbox" name="remember" checked><span class="tiny">Keep me signed in on this device</span></label>
+          </div>
+          <button class="btn btn-primary btn-lg btn-block mt-5" type="submit">Sign in to demo <i class="ph ph-arrow-right"></i></button>
+        </form>
+
+        <div class="card mt-6">
+          <div class="card-head" style="padding:12px 14px">
+            <div><h4 style="font-size:var(--text-xs)"><i class="ph ph-key"></i> Demo credentials</h4><p class="sub">Password is 123456 for every role</p></div>
+            <span class="badge badge-neutral">Local only</span>
+          </div>
+          <div style="padding:2px 14px 8px" data-demo-creds></div>
+        </div>
+
+        <p class="tiny faint mt-5" style="text-align:center">New merchant? <a class="link" href="register.html">Create a demo account</a></p>
+        <div class="alert warn mt-4" style="font-size:var(--text-2xs);padding:10px 12px">
+          <i class="ph ph-warning"></i>
+          <div><strong>Simulated authentication.</strong> Credentials are stored in plain text in your browser for demonstration only. Never use real passwords here.</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/vendor/chart.umd.min.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/tracking.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/public.js"></script>
+  <script src="js/pages.js"></script>
+</body>
+</html>

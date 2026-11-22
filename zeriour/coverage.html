@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coverage areas — 64 districts · Zeriour</title>
+  <meta name="description" content="Zeriour coverage across all eight divisions of Bangladesh. Check districts, upazilas, transit times and remote-area surcharges.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a1728'/%3E%3Cpath d='M8 10h14L11 23h13' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700&family=Plus+Jakarta+Sans:wght@500;600;700;750;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/phosphor/regular/style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="coverage.html">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-pub-header></div>
+
+  <main id="main">
+    <section class="section-sm" style="background:var(--surface);border-bottom:1px solid var(--line);padding-top:48px">
+      <div class="container">
+        <div class="between wrap gap-6">
+          <div style="max-width:620px">
+            <div class="eyebrow">Coverage</div>
+            <h1 style="margin-top:10px">From Gulshan to Kurigram.</h1>
+            <p class="lead mt-4">Eight regional hubs, daily line-haul and upazila routes reach every district in Bangladesh. Remote areas are marked clearly with longer transit and a routing surcharge.</p>
+          </div>
+          <div class="grid g-2 coverage-stats" style="gap:10px;min-width:260px">
+            <div class="card card-pad"><div class="num" style="font-family:var(--font-display);font-weight:750;font-size:22px;letter-spacing:-.03em">64</div><div class="tiny muted">districts</div></div>
+            <div class="card card-pad"><div class="num" style="font-family:var(--font-display);font-weight:750;font-size:22px;letter-spacing:-.03em">495</div><div class="tiny muted">upazilas mapped</div></div>
+            <div class="card card-pad"><div class="num" style="font-family:var(--font-display);font-weight:750;font-size:22px;letter-spacing:-.03em">8</div><div class="tiny muted">regional hubs</div></div>
+            <div class="card card-pad"><div class="num" style="font-family:var(--font-display);font-weight:750;font-size:22px;letter-spacing:-.03em">1–2<span style="font-size:13px">d</span></div><div class="tiny muted">metro transit</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-sm" style="padding-top:32px">
+      <div class="container">
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:20px;align-items:stretch" id="coverageTop">
+          <div class="map-card">
+            <div class="between mb-2">
+              <div><h3 style="font-size:var(--text-md)">Network overview</h3><p class="tiny muted">Click a division to filter districts</p></div>
+              <span class="badge badge-neutral"><i class="ph ph-circles-three-plus"></i> Schematic</span>
+            </div>
+            <div data-network-map></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div><h3><i class="ph ph-buildings"></i> Hub directory</h3><p class="sub">Daily dispatch and receiving</p></div><span class="badge badge-success"><i class="dot"></i>Operational</span></div>
+            <div class="card-body" data-hub-directory style="display:flex;flex-direction:column;gap:10px">
+              <div class="row gap-3"><span class="badge badge-neutral mono" style="min-width:54px;justify-content:center">DHK-01</span><div class="grow"><div class="strong small">Motijheel Hub</div><div class="tiny muted">Dhaka · 22 staff</div></div><span class="tiny faint">Level 3, Adamjee Court</span></div>
+              <div class="row gap-3"><span class="badge badge-neutral mono" style="min-width:54px;justify-content:center">DHK-02</span><div class="grow"><div class="strong small">Mirpur Sorting Centre</div><div class="tiny muted">Dhaka · 18 staff</div></div><span class="tiny faint">Mirpur 10 Circle</span></div>
+              <div class="row gap-3"><span class="badge badge-neutral mono" style="min-width:54px;justify-content:center">CHT-01</span><div class="grow"><div class="strong small">Chattogram Port Branch</div><div class="tiny muted">Chattogram · 16 staff</div></div><span class="tiny faint">Agrabad C/A</span></div>
+              <div class="row gap-3"><span class="badge badge-neutral mono" style="min-width:54px;justify-content:center">SYL-01</span><div class="grow"><div class="strong small">Sylhet City Branch</div><div class="tiny muted">Sylhet · 11 staff</div></div><span class="tiny faint">Zindabazar Point</span></div>
+              <div class="row gap-3"><span class="badge badge-neutral mono" style="min-width:54px;justify-content:center">RAJ-01</span><div class="grow"><div class="strong small">Rajshahi Branch</div><div class="tiny muted">Rajshahi · 9 staff</div></div><span class="tiny faint">Shaheb Bazar</span></div>
+              <div class="row gap-3"><span class="badge badge-neutral mono" style="min-width:54px;justify-content:center">KHL-01</span><div class="grow"><div class="strong small">Khulna Branch</div><div class="tiny muted">Khulna · 8 staff</div></div><span class="tiny faint">Sonadanga</span></div>
+              <div class="row gap-3"><span class="badge badge-neutral mono" style="min-width:54px;justify-content:center">TGL-01</span><div class="grow"><div class="strong small">Tangail Branch</div><div class="tiny muted">Tangail · 6 staff</div></div><span class="tiny faint">Victoria Road</span></div>
+              <div class="row gap-3"><span class="badge badge-neutral mono" style="min-width:54px;justify-content:center">GAZ-01</span><div class="grow"><div class="strong small">Gazipur Branch</div><div class="tiny muted">Gazipur · 12 staff</div></div><span class="tiny faint">Dhaka–Tongi Road</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:12px">
+      <div class="container">
+        <div class="card card-pad mb-6">
+          <div class="row gap-3 wrap">
+            <div class="search-field grow" style="min-width:220px">
+              <i class="ph ph-magnifying-glass"></i>
+              <input type="search" placeholder="Search district or upazila…" data-coverage-search aria-label="Search coverage">
+            </div>
+            <div class="row gap-1 wrap coverage-divisions" style="gap:4px">
+              <button class="btn btn-sm btn-ghost is-active" data-division="">All divisions</button>
+              <button class="btn btn-sm btn-ghost" data-division="Dhaka">Dhaka</button>
+              <button class="btn btn-sm btn-ghost" data-division="Chattogram">Chattogram</button>
+              <button class="btn btn-sm btn-ghost" data-division="Sylhet">Sylhet</button>
+              <button class="btn btn-sm btn-ghost" data-division="Rajshahi">Rajshahi</button>
+              <button class="btn btn-sm btn-ghost" data-division="Khulna">Khulna</button>
+              <button class="btn btn-sm btn-ghost" data-division="Rangpur">Rangpur</button>
+              <button class="btn btn-sm btn-ghost" data-division="Barishal">Barishal</button>
+              <button class="btn btn-sm btn-ghost" data-division="Mymensingh">Mymensingh</button>
+            </div>
+            <span class="badge badge-neutral" style="margin-left:auto"><strong data-coverage-count>64</strong>&nbsp;districts</span>
+          </div>
+        </div>
+
+        <div class="grid g-3" data-coverage-grid style="gap:12px"></div>
+
+        <div class="grid g-2 mt-8" style="gap:16px" id="coverageNotes">
+          <div class="card card-pad">
+            <div class="row gap-2"><span class="kpi-ico warn"><i class="ph ph-warning-circle"></i></span><h4 style="font-size:var(--text-md)">Remote & restricted districts</h4></div>
+            <p class="small muted mt-3" style="line-height:1.65">Bandarban, Rangamati, Khagrachhari, Panchagarh, Kurigram, Barguna, Bhola, Patuakhali and Sunamganj are served on specific weekly routes. A ৳35 surcharge applies and transit can take up to 5 days.</p>
+          </div>
+          <div class="card card-pad">
+            <div class="row gap-2"><span class="kpi-ico success"><i class="ph ph-check-circle"></i></span><h4 style="font-size:var(--text-md)">Same-day metro zones</h4></div>
+            <p class="small muted mt-3" style="line-height:1.65">Same-day service covers Dhaka (Dhanmondi, Gulshan, Mirpur, Motijheel, Uttara and surrounding thanas) and Chattogram (Agrabad, Halishahar, Panchlaish, Kotwali). Order before 11:00 AM.</p>
+          </div>
+        </div>
+
+        <div class="cta-band mt-8">
+          <div><h2>Not sure about your area?</h2><p>Send us your district and thana — we’ll confirm the route, cut-off and expected transit time.</p></div>
+          <div class="row gap-2 wrap"><a class="btn btn-primary btn-lg" href="contact.html">Ask coverage</a><a class="btn btn-ghost btn-lg" href="register.html">Start shipping</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-pub-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/vendor/chart.umd.min.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/tracking.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/public.js"></script>
+  <script src="js/pages.js"></script>
+</body>
+</html>
